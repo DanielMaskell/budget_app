@@ -46,6 +46,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   border: OutlineInputBorder(),
                   hintText: '0.00',
                 ),
+                keyboardType: TextInputType.number,
                 onChanged: (text) => amount = double.parse(text),
               ),
               DropdownButton(
