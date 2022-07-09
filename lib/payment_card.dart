@@ -28,7 +28,7 @@ class PaymentCard extends StatelessWidget {
               child: Text(payment.name, style: boldStyle),
             ),
           ),
-          _getPetIcon(payment.type)
+          //_getPetIcon(payment.type)
         ],
       ),
       // TODO Add pet room navigation

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:budget_app/payment_card.dart';
 import 'package:budget_app/repository/data_repository.dart';
-import 'add_pet_dialog.dart';
+import 'add_payment_dialog.dart';
 import 'models/payment.dart';
 import 'payment_card.dart';
 
