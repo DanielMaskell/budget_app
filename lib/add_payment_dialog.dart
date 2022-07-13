@@ -1,3 +1,4 @@
+import 'package:budget_app/widgets/date_picker.dart';
 import 'package:flutter/material.dart';
 import 'models/payment.dart';
 import 'repository/data_repository.dart';
@@ -14,10 +15,46 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   String character = '';
   String? paymentDescription;
   List<String> items = ['Recurring', 'Single'];
-  String? occurance = 'Single';
-  double? amount = 0.00;
+  List<String> types = ['Power', 'water'];
+  String? occurence = 'Single';
+  double amount = 0.00;
+  String type = 'Power';
+  DateTime selectedDate = DateTime.now();
+  String? frequency = 'Weekly';
+  List<String> frequencies = ['Weekly', 'Fortnightly', 'Monthly'];
 
   final DataRepository repository = DataRepository();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2020, 1),
+      lastDate: DateTime(2030)
+    );
+    if(picked != null && picked != selectedDate){
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+  DropdownButton _frequencyPicker (BuildContext context){
+    return DropdownButton(
+                value: type,
+                items: frequencies.map((String frequencies){
+                  return DropdownMenuItem(
+                    value: frequencies,
+                    child: Text(frequencies),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    frequency = newValue!;
+                  });
+                }
+              ),
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +64,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
           child: ListBody(
             children: <Widget>[
               TextField(
-                autofocus: true,
+               // autofocus: true,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter a Payment Name'),
@@ -50,7 +87,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 onChanged: (text) => amount = double.parse(text),
               ),
               DropdownButton(
-                value: occurance,
+                value: occurence,
                 items: items.map((String items) {
                   return DropdownMenuItem(
                     value: items,
@@ -59,39 +96,31 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 }).toList(), 
                 onChanged: (String? newValue) {
                   setState(() {
-                   occurance = newValue!;
+                   occurence = newValue!;
                   });
-                }),
-              /*RadioListTile(
-                title: const Text('Recurring'),
-                value: 'recurring',
-                groupValue: character,
-                onChanged: (value) {
-                  setState(() {
-                    character = (value ?? '') as String;
-                  });
-                },
+                }
               ),
-              RadioListTile(
-                title: const Text('Single'),
-                value: 'single',
-                groupValue: character,
-                onChanged: (value) {
+              DropdownButton(
+                value: type,
+                items: types.map((String types){
+                  return DropdownMenuItem(
+                    value: types,
+                    child: Text(types),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
                   setState(() {
-                    character = (value ?? '') as String;
+                    type = newValue!;
                   });
-                },
+                }
               ),
-              RadioListTile(
-                title: const Text('Other'),
-                value: 'other',
-                groupValue: character,
-                onChanged: (value) {
-                  setState(() {
-                    character = (value ?? '') as String;
-                  });
-                },
-              )*/
+              Container(
+                child: occurence == 'Recurring' ? ,
+              ),
+              ElevatedButton(
+                onPressed: ()=> _selectDate(context), 
+                child: const Text('Date'),
+              )
             ],
           ),
         ),
@@ -103,11 +132,15 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               child: const Text('Cancel')),
           TextButton(
               onPressed: () {
-                if (paymentName != null && character.isNotEmpty) {
-                  final newPayment =
-                      Payment(paymentName!, type: character, dates: [], occurance: 'once');
-                  repository.addPayment(newPayment);
-                  Navigator.of(context).pop();
+                try{
+                  if (paymentName != null) {
+                    final newPayment =
+                        Payment(paymentName!, type: type, dates: [], occurence: 'once', amount: amount);
+                    repository.addPayment(newPayment);
+                    Navigator.of(context).pop();
+                  }
+                } catch(err){
+                  print('Error adding payment: $err');
                 }
               },
               child: const Text('Add')),

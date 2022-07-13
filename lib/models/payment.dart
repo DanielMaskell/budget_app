@@ -8,12 +8,17 @@ class Payment {
   List<Date> dates;
   String? referenceId;
   String occurance;
+  double amount;
 
   Payment(this.name,
-      {this.description,
+    {
+      this.description,
       required this.type,
       required this.dates,
-      required this.occurance});
+      required this.occurance,
+      required this.amount
+    }
+  );
 
   factory Payment.fromSnapshot(DocumentSnapshot snapshot) {
     final newPayment =
@@ -31,11 +36,14 @@ class Payment {
 }
 
 Payment _paymentFromJson(Map<String, dynamic> json) {
-  return Payment(json['name'] as String,
-      description: json['description'] as String?,
-      type: json['type'] as String,
-      occurance: json['occurance'] as String,
-      dates: _convertDates(json['dates'] as List<dynamic>));
+  return Payment(
+    json['name'] as String,
+    description: json['description'] as String?,
+    type: json['type'] as String,
+    occurance: json['occurance'] as String,
+    dates: _convertDates(json['dates'] as List<dynamic>),
+    amount: json['amount'] as double
+  );
 }
 
 List<Date> _convertDates(List<dynamic> dateMap) {
@@ -52,7 +60,8 @@ Map<String, dynamic> _paymentToJson(Payment instance) => <String, dynamic>{
       'description': instance.description,
       'type': instance.type,
       'dates': _dateList(instance.dates),
-      'occurance': instance.occurance
+      'occurance': instance.occurance,
+      'amount': instance.amount
     };
 
 List<Map<String, dynamic>>? _dateList(List<Date>? dates) {
