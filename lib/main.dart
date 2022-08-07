@@ -3,6 +3,7 @@ import 'package:budget_app/screens/adduser_screen.dart';
 import 'package:budget_app/screens/login_screen.dart';
 import 'package:budget_app/screens/home_screen.dart';
 import 'package:budget_app/screens/test_screen.dart';
+import 'package:budget_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/routes/Routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,7 +30,8 @@ void main() async {
       Routes.home: (context) => const HomeScreen(),
       Routes.second: (context) => const SecondScreen(),
       Routes.adduser: (context) => AddUser(),
-      Routes.addpet: (context) => const AddPet()
+      Routes.addpet: (context) => const AddPet(),
+      Routes.profile:(context) => ProfilePage()
     },
   ));
 }

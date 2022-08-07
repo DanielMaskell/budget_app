@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:budget_app/routes/Routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -31,6 +32,19 @@ class AppDrawer extends StatelessWidget {
               text: 'Add Payment',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.addpet)),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.event,
+              text: 'Proflie Page',
+              onTap: () =>
+                  Navigator.pushReplacementNamed(context, Routes.profile)),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.event,
+              text: 'Sign Out',
+              onTap: () => {
+                  FirebaseAuth.instance.signOut(),
+                  Navigator.pushReplacementNamed(context, Routes.login)}),
           Divider(),
         ],
       ),
