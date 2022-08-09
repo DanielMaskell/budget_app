@@ -31,7 +31,8 @@ void main() async {
       Routes.second: (context) => const SecondScreen(),
       Routes.adduser: (context) => AddUser(),
       Routes.addpet: (context) => const AddPet(),
-      Routes.profile: (context) => const ProfilePage()
+      Routes.profile: (context) => const ProfilePage(),
+      Routes.login: (context) => LoginPage()
     },
   ));
 }

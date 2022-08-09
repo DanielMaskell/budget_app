@@ -8,7 +8,7 @@ import 'package:budget_app/validator.dart';
 import 'package:budget_app/screens/home_screen.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String routeName = '/profile';
+  static const String routeName = '/login';
   @override
   _LoginPageState createState() => _LoginPageState();
 }
