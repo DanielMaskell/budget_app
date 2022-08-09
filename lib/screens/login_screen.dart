@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Firebase Authentication'),
+          title: const Text('Firebase Authentication'),
         ),
         body: FutureBuilder(
           future: _initializeFirebase(),
@@ -81,13 +81,13 @@ class _LoginPageState extends State<LoginPage> {
                               hintText: "Email",
                               errorBorder: UnderlineInputBorder(
                                 borderRadius: BorderRadius.circular(6.0),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.red,
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           TextFormField(
                             controller: _passwordTextController,
                             focusNode: _focusPassword,
@@ -99,15 +99,15 @@ class _LoginPageState extends State<LoginPage> {
                               hintText: "Password",
                               errorBorder: UnderlineInputBorder(
                                 borderRadius: BorderRadius.circular(6.0),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.red,
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 24.0),
+                          const SizedBox(height: 24.0),
                           _isProcessing
-                              ? CircularProgressIndicator()
+                              ? const CircularProgressIndicator()
                               : Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -140,19 +140,19 @@ class _LoginPageState extends State<LoginPage> {
                                                   .pushReplacement(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ProfilePage(),
+                                                      const ProfilePage(),
                                                 ),
                                               );
                                             }
                                           }
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Sign In',
                                           style: TextStyle(color: Colors.white),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 24.0),
+                                    const SizedBox(width: 24.0),
                                     Expanded(
                                       child: ElevatedButton(
                                         onPressed: () {
@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                                             ),
                                           );
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Register',
                                           style: TextStyle(color: Colors.white),
                                         ),
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
               );
             }
 
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           },
