@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
-  final int id;
+  final String id;
 
   User(this.id);
 
@@ -14,7 +14,7 @@ class User {
 }
 
 User _userFromJson(Map<String, dynamic> json) {
-  return User(json['id'] as int);
+  return User(json['id'] as String);
 }
 
 Map<String, dynamic> _userToJson(User instance) =>

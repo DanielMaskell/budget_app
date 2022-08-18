@@ -6,6 +6,7 @@ import 'package:budget_app/screens/register_screen.dart';
 import 'package:budget_app/fire_auth.dart';
 import 'package:budget_app/validator.dart';
 import 'package:budget_app/screens/home_screen.dart';
+import 'package:budget_app/repository/user_repository.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = '/login';
@@ -24,6 +25,8 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isProcessing = false;
 
+  final UserRepository repository = UserRepository();
+
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
@@ -40,6 +43,11 @@ class _LoginPageState extends State<LoginPage> {
     return firebaseApp;
   }
 
+  void addUserToDb() {
+    User? user = FirebaseAuth.instance.currentUser;
+    repository.addUser(user);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -49,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Firebase Authentication'),
+          title: const Text('Budget App'),
         ),
         body: FutureBuilder(
           future: _initializeFirebase(),
@@ -136,11 +144,12 @@ class _LoginPageState extends State<LoginPage> {
                                             });
 
                                             if (user != null) {
+                                              addUserToDb();
                                               Navigator.of(context)
                                                   .pushReplacement(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const ProfilePage(),
+                                                      const HomeScreen(),
                                                 ),
                                               );
                                             }

@@ -1,4 +1,5 @@
-import 'package:budget_app/models/user.dart';
+import 'package:budget_app/models/user.dart' as CurrentUser;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserRepository {
@@ -9,7 +10,18 @@ class UserRepository {
     return collection.snapshots();
   }
 
-  Future<DocumentReference> addUSer(User user) {
-    return collection.add(user.toJson());
+  Future<bool> addUser(User? user) async {
+    CurrentUser.User currentUser = CurrentUser.User(user!.uid);
+    final result =
+        await collection.where('id', isEqualTo: currentUser.id).get();
+    if (result.docs.isEmpty) {
+      final addResult = await collection.add(currentUser.toJson());
+      return true;
+    }
+    return true;
   }
+
+  /*Future<DocumentReference> getUser(User user) {
+    return collection.get();
+  }*/
 }

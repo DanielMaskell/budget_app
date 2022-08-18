@@ -20,32 +20,33 @@ class AppDrawer extends StatelessWidget {
               text: 'Second',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.second)),
-          Divider(),
+          const Divider(),
           _createDrawerItem(
               icon: Icons.event,
               text: 'Add User',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.adduser)),
-          Divider(),
+          const Divider(),
           _createDrawerItem(
               icon: Icons.event,
               text: 'Add Payment',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.addpet)),
-          Divider(),
+          const Divider(),
           _createDrawerItem(
               icon: Icons.event,
               text: 'Proflie Page',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.profile)),
-          Divider(),
+          const Divider(),
           _createDrawerItem(
               icon: Icons.event,
               text: 'Sign Out',
               onTap: () => {
-                  FirebaseAuth.instance.signOut(),
-                  Navigator.pushReplacementNamed(context, Routes.login)}),
-          Divider(),
+                    FirebaseAuth.instance.signOut(),
+                    Navigator.pushReplacementNamed(context, Routes.login)
+                  }),
+          const Divider(),
         ],
       ),
     );

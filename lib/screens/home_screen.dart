@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:budget_app/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:budget_app/repository/user_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,9 +12,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State {
+  final UserRepository repository = UserRepository();
+
   @override
   void initState() {
     super.initState();
+
+    //addUserToDb();
   }
 
   @override
@@ -40,6 +45,7 @@ class _HomeScreenState extends State {
   }
 
   void addUserToDb() {
-    User? userId = FirebaseAuth.instance.currentUser;
+    User? user = FirebaseAuth.instance.currentUser;
+    repository.addUser(user);
   }
 }
