@@ -1,5 +1,6 @@
 import 'package:budget_app/widgets/date_picker.dart';
 import 'package:flutter/material.dart';
+import 'models/date.dart';
 import 'models/payment.dart';
 import 'repository/data_repository.dart';
 
@@ -141,9 +142,15 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               onPressed: () {
                 try {
                   if (paymentName != null) {
+                    List<DateTime> tempDates = [];
+                    if (occurence == 'Single') {
+                      print('occurence true');
+                      tempDates.add(selectedDate);
+                    }
+
                     final newPayment = Payment(paymentName!,
                         type: type,
-                        dates: [],
+                        dates: tempDates,
                         occurence: 'once',
                         amount: amount);
                     repository.addPayment(newPayment);
