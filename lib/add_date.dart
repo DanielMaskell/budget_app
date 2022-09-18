@@ -66,12 +66,12 @@ class _AddDateState extends State<AddDate> {
                     onChanged: (text) {
                       date = text;
                     }),
-                DoneCheckBox(
+                /*DoneCheckBox(
                     name: 'Done',
                     value: done,
                     onChanged: (text) {
                       done = text ?? done;
-                    }),
+                    }),*/
               ],
             ),
           ),
@@ -87,8 +87,8 @@ class _AddDateState extends State<AddDate> {
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
                   Navigator.of(context).pop();
-                  final newDate = Date(dateName, date: date, done: done);
-                  payment.dates.add(newDate);
+                  //final newDate = Date(dateName, date: date, done: done);
+                  //payment.date.add(date);
                 }
                 widget.callback();
               },

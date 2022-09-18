@@ -5,7 +5,7 @@ class Payment {
   String name;
   String? description;
   String type;
-  List<DateTime> dates;
+  DateTime date;
   String? referenceId;
   String occurence;
   double amount;
@@ -13,7 +13,7 @@ class Payment {
   Payment(this.name,
       {this.description,
       required this.type,
-      required this.dates,
+      required this.date,
       required this.occurence,
       required this.amount});
 
@@ -37,15 +37,17 @@ Payment _paymentFromJson(Map<String, dynamic> json) {
       description: json['description'] as String?,
       type: json['type'] as String,
       occurence: json['occurence'] as String,
-      dates: json['dates'], //_convertDates(json['dates'] as List<dynamic>),
+      date: (json['date'] as Timestamp).toDate(),
+      //_convertDates(json['dates']), /*json['dates']
+      //.cast<DateTime>(), *///_convertDates(json['dates'] as List<dynamic>),
       amount: json['amount'] as double);
 }
 
-/*List<Date> _convertDates(List<dynamic> dateMap) {
+/*List<DateTime> _convertDates(List<dynamic> dateMap) {
   final dates = <DateTime>[];
 
   for (final date in dateMap) {
-    /dates.add(date as Map<DateTime>);
+    dates.add(date as Map<dynamic>);
   }
   return dates;
 }*/
@@ -54,7 +56,7 @@ Map<String, dynamic> _paymentToJson(Payment instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'type': instance.type,
-      'dates': instance.dates, //_dateList(instance.dates),
+      'date': instance.date, //_dateList(instance.dates),
       'occurence': instance.occurence,
       'amount': instance.amount
     };

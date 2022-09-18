@@ -142,15 +142,15 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               onPressed: () {
                 try {
                   if (paymentName != null) {
-                    List<DateTime> tempDates = [];
+                    /*List<DateTime> tempDates = [];
                     if (occurence == 'Single') {
                       print('occurence true');
                       tempDates.add(selectedDate);
-                    }
+                    }*/
 
                     final newPayment = Payment(paymentName!,
                         type: type,
-                        dates: tempDates,
+                        date: selectedDate,
                         occurence: 'once',
                         amount: amount);
                     repository.addPayment(newPayment);

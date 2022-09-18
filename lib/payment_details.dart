@@ -136,12 +136,12 @@ class _PaymentDetailState extends State<PaymentDetail> {
     );
   }
 
-  Widget buildRow(Date date) {
+  Widget buildRow(DateTime date) {
     return Row(
       children: <Widget>[
-        Expanded(
+        /*Expanded(
           flex: 1,
-          child: Text(date.name),
+          child: Text(date),
         ),
         Text(dateFormat.format(date.date)),
         Checkbox(
@@ -151,7 +151,7 @@ class _PaymentDetailState extends State<PaymentDetail> {
               date.done = newValue;
             });
           },
-        )
+        )*/
       ],
     );
   }
