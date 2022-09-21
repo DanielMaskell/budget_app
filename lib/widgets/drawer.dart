@@ -15,18 +15,18 @@ class AppDrawer extends StatelessWidget {
               text: 'Home',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.home)),
-          _createDrawerItem(
+          /*_createDrawerItem(
               icon: Icons.event,
               text: 'Second',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.second)),
-          const Divider(),
-          _createDrawerItem(
+          const Divider(),*/
+          /*_createDrawerItem(
               icon: Icons.event,
               text: 'Add User',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.adduser)),
-          const Divider(),
+          const Divider(),*/
           _createDrawerItem(
               icon: Icons.event,
               text: 'Add Payment',
@@ -35,7 +35,7 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           _createDrawerItem(
               icon: Icons.event,
-              text: 'Proflie Page',
+              text: 'Profile Page',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.profile)),
           const Divider(),
