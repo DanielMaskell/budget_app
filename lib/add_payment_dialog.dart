@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'models/date.dart';
 import 'models/payment.dart';
 import 'repository/data_repository.dart';
+import 'package:hive/hive.dart';
 
 class AddPaymentDialog extends StatefulWidget {
   const AddPaymentDialog({Key? key}) : super(key: key);
@@ -153,7 +154,8 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                         date: selectedDate,
                         occurence: 'once',
                         amount: amount);
-                    repository.addPayment(newPayment);
+                    //repository.addPayment(newPayment);
+                    Hive.box('paymentBox').add(newPayment);
                     Navigator.of(context).pop();
                   }
                 } catch (err) {

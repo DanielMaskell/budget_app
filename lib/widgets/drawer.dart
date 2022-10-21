@@ -15,18 +15,6 @@ class AppDrawer extends StatelessWidget {
               text: 'Home',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.home)),
-          /*_createDrawerItem(
-              icon: Icons.event,
-              text: 'Second',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.second)),
-          const Divider(),*/
-          /*_createDrawerItem(
-              icon: Icons.event,
-              text: 'Add User',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.adduser)),
-          const Divider(),*/
           _createDrawerItem(
               icon: Icons.event,
               text: 'Add Payment',
@@ -56,11 +44,6 @@ class AppDrawer extends StatelessWidget {
     return DrawerHeader(
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
-        /*decoration: const BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                //image: AssetImage('res/images/drawer_header_background.png')
-                )),*/
         child: Stack(children: const <Widget>[
           Positioned(
               bottom: 12.0,
