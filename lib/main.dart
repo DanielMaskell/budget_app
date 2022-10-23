@@ -12,6 +12,7 @@ import 'firebase_options.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'models/date_hive.dart';
+import 'models/payment.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,10 +28,14 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(DateHiveAdapter());
   Hive.registerAdapter(PaymentHiveAdapter());
-  await Hive.openBox('paymentBox');
-  var box = Hive.box('paymentBox');
-  box.put('test', [4, 5, 6]);
-  print('test: ' + box.get('test').toString());
+  var box = await Hive.openBox<PaymentHive>('paymentBoxTest');
+  //box.clear();
+  //var box = Hive.box('paymentBox');
+  //box.deleteFromDisk();
+  //box.add(PaymentHive(name: 'Test1', type: 'Power', date: DateTime.now(), occurence: 'single', amount: 24.00));
+  //box.put('test1', [7, 8, 9]);
+ // PaymentHive? tempPayment = box.getAt(0);
+ // print('test1: ' + tempPayment!.name);
 
   runApp(MaterialApp(
     title: 'Flutter Demo',

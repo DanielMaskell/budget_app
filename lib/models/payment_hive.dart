@@ -17,7 +17,7 @@ class PaymentHive {
   final DateTime date;
 
   @HiveField(4)
-  final String? referenceId;
+  final int? referenceId;
 
   @HiveField(5)
   final String occurence;
@@ -25,12 +25,13 @@ class PaymentHive {
   @HiveField(6)
   final double amount;
 
-  PaymentHive(
-      {required this.name,
-      this.description,
-      required this.type,
-      required this.date,
-      required this.referenceId,
-      required this.occurence,
-      required this.amount});
+  PaymentHive({
+    required this.name,
+    this.description,
+    required this.type,
+    required this.date,
+    this.referenceId,
+    required this.occurence,
+    required this.amount
+  });
 }

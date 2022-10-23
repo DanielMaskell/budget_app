@@ -21,7 +21,7 @@ class PaymentHiveAdapter extends TypeAdapter<PaymentHive> {
       description: fields[1] as String?,
       type: fields[2] as String,
       date: fields[3] as DateTime,
-      referenceId: fields[4] as String?,
+      referenceId: fields[4] as int?,
       occurence: fields[5] as String,
       amount: fields[6] as double,
     );

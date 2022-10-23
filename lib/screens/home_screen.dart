@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:budget_app/repository/user_repository.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../models/payment_hive.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
   static const String routeName = '/home';
@@ -16,7 +18,7 @@ class _HomeScreenState extends State {
   final UserRepository repository = UserRepository();
 
   var temp = [];
-  var box;
+  late Box<PaymentHive> box;
 
   @override
   void initState() {
@@ -31,10 +33,12 @@ class _HomeScreenState extends State {
   }
 
   void openBox() async {
-    box = await Hive.openBox('paymentBox');
+    //box = await Hive.openBox('paymentBox');
+    box = Hive.box<PaymentHive>('paymentBoxTest');
     //temp = box.get('test2');
-    temp.getRange(0, 5);
-    print('temp:' + temp.toString());
+    //int tempLength = box.(length)
+    //box.getRange(0, 5);
+    print('temp:' + box.values.toString());
   }
 
   @override
@@ -45,7 +49,7 @@ class _HomeScreenState extends State {
       ),
       drawer: SafeArea(child: AppDrawer()),
       body: Center(
-        child: Text('Box Length: ' + temp.toString()),
+        child: Text('Box Length: ' + box.length.toString()),
         /*child: ElevatedButton(
           onPressed: () {
             // Navigate to the second screen when tapped.

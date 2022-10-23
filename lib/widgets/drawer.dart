@@ -17,7 +17,7 @@ class AppDrawer extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, Routes.home)),
           _createDrawerItem(
               icon: Icons.event,
-              text: 'Add Payment',
+              text: 'Payments',
               onTap: () =>
                   Navigator.pushReplacementNamed(context, Routes.addpet)),
           const Divider(),

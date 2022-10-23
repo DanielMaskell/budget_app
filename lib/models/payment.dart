@@ -10,12 +10,14 @@ class Payment {
   String occurence;
   double amount;
 
-  Payment(this.name,
-      {this.description,
-      required this.type,
-      required this.date,
-      required this.occurence,
-      required this.amount});
+  Payment( {
+    required this.name,
+    this.description,
+    required this.type,
+    required this.date,
+    required this.occurence,
+    required this.amount
+  });
 
   factory Payment.fromSnapshot(DocumentSnapshot snapshot) {
     final newPayment =
@@ -33,14 +35,15 @@ class Payment {
 }
 
 Payment _paymentFromJson(Map<String, dynamic> json) {
-  return Payment(json['name'] as String,
-      description: json['description'] as String?,
-      type: json['type'] as String,
-      occurence: json['occurence'] as String,
-      date: (json['date'] as Timestamp).toDate(),
-      //_convertDates(json['dates']), /*json['dates']
-      //.cast<DateTime>(), *///_convertDates(json['dates'] as List<dynamic>),
-      amount: json['amount'] as double);
+  return Payment(
+    name: json['name'] as String,
+    description: json['description'] as String?,
+    type: json['type'] as String,
+    occurence: json['occurence'] as String,
+    date: (json['date'] as Timestamp).toDate(),
+    //_convertDates(json['dates']), /*json['dates']
+    //.cast<DateTime>(), *///_convertDates(json['dates'] as List<dynamic>),
+    amount: json['amount'] as double);
 }
 
 /*List<DateTime> _convertDates(List<dynamic> dateMap) {

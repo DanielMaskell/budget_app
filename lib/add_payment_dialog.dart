@@ -1,7 +1,9 @@
+import 'package:budget_app/repository/payment_repository.dart';
 import 'package:budget_app/widgets/date_picker.dart';
 import 'package:flutter/material.dart';
 import 'models/date.dart';
 import 'models/payment.dart';
+import 'models/payment_hive.dart';
 import 'repository/data_repository.dart';
 import 'package:hive/hive.dart';
 
@@ -26,6 +28,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   List<String> frequencies = ['Weekly', 'Fortnightly', 'Monthly'];
 
   final DataRepository repository = DataRepository();
+  final PaymentRepository paymentRepository = PaymentRepository();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -149,13 +152,15 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       tempDates.add(selectedDate);
                     }*/
 
-                    final newPayment = Payment(paymentName!,
+                    final newPayment = PaymentHive(
+                        name: paymentName!,
                         type: type,
                         date: selectedDate,
                         occurence: 'once',
                         amount: amount);
                     //repository.addPayment(newPayment);
-                    Hive.box('paymentBox').add(newPayment);
+                    //Hive.box<PaymentHive>('paymentBoxTest').add(newPayment);
+                    paymentRepository.addPayment(newPayment);
                     Navigator.of(context).pop();
                   }
                 } catch (err) {
