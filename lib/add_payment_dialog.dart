@@ -43,23 +43,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     }
   }
 
-  /*DropdownButton _frequencyPicker (BuildContext context){
-    /*return DropdownButton(
-                value: frequency,
-                items: frequencies.map((String frequencies){
-                  return DropdownMenuItem(
-                    value: frequencies,
-                    child: Text(frequencies),
-                  );
-                }).toList(),
-                onChanged: (String newValue) {
-                  setState(() {
-                    frequency = newValue!;
-                  });
-                }
-              ),*/
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -146,20 +129,14 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               onPressed: () {
                 try {
                   if (paymentName != null) {
-                    /*List<DateTime> tempDates = [];
-                    if (occurence == 'Single') {
-                      print('occurence true');
-                      tempDates.add(selectedDate);
-                    }*/
-
-                    final newPayment = PaymentHive(
+                    final newPayment = 
+                      PaymentHive(
                         name: paymentName!,
                         type: type,
                         date: selectedDate,
                         occurence: 'once',
-                        amount: amount);
-                    //repository.addPayment(newPayment);
-                    //Hive.box<PaymentHive>('paymentBoxTest').add(newPayment);
+                        amount: double.parse(amount.toStringAsFixed(2)),
+                      );
                     paymentRepository.addPayment(newPayment);
                     Navigator.of(context).pop();
                   }

@@ -1,13 +1,8 @@
 import 'package:budget_app/repository/payment_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:budget_app/payment_card.dart';
 import 'package:budget_app/repository/data_repository.dart';
-import 'package:hive/hive.dart';
 import 'add_payment_dialog.dart';
-import 'models/payment.dart';
 import 'models/payment_hive.dart';
-import 'payment_card.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeList extends StatefulWidget {
@@ -17,9 +12,8 @@ class HomeList extends StatefulWidget {
 }
 
 class _HomeListState extends State<HomeList> {
-  final DataRepository repository = DataRepository();
   final PaymentRepository paymentRepository = PaymentRepository();
-  late final  Map<dynamic, PaymentHive> payments = paymentRepository.getBox();
+  late final Map<dynamic, PaymentHive> payments = paymentRepository.getBox();
   late Box<PaymentHive> paymentBox;
 
   final boldStyle =
@@ -58,14 +52,6 @@ class _HomeListState extends State<HomeList> {
           );
         },
       ),
-      
-      /*StreamBuilder<QuerySnapshot>(
-          stream: repository.getStream(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return LinearProgressIndicator();
-
-            return _buildList(context, snapshot.data?.docs ?? []);
-          }),*/
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _addPayment();
@@ -84,21 +70,4 @@ class _HomeListState extends State<HomeList> {
       },
     );
   }
-
-  /*Widget _buildList(BuildContext context, List<PaymentHive> snapshot) {
-    /*return ListView(
-      padding: const EdgeInsets.only(top: 20.0),
-      // 2
-      //children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-      children: payments.map((key, value) => _buildListItem(context, data)).toList(),
-    );*/
-  }*/
-
-// 3
-  /*Widget _buildListItem(BuildContext context, PaymentHive snapshot) {
-    // 4
-    final payment = PaymentHive.fromSnapshot(snapshot);
-
-    return PaymentCard(payment: payment, boldStyle: boldStyle);
-  }*/
 }
