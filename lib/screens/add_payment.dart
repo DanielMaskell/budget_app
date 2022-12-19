@@ -11,7 +11,7 @@ class AddPet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Payment'),
+        title: const Text('Payments'),
       ),
       drawer: SafeArea(child: AppDrawer()),
       body: Center(child: HomeList()),

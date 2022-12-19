@@ -8,7 +8,10 @@ import 'repository/data_repository.dart';
 import 'package:hive/hive.dart';
 
 class AddPaymentDialog extends StatefulWidget {
-  const AddPaymentDialog({Key? key}) : super(key: key);
+  const AddPaymentDialog({Key? key, required this.addPaymentCallback})
+      : super(key: key);
+
+  final void Function() addPaymentCallback;
 
   @override
   _AddPaymentDialogState createState() => _AddPaymentDialogState();
@@ -26,7 +29,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   DateTime selectedDate = DateTime.now();
   String frequency = 'Weekly';
   List<String> frequencies = ['Weekly', 'Fortnightly', 'Monthly'];
-
   final DataRepository repository = DataRepository();
   final PaymentRepository paymentRepository = PaymentRepository();
 
@@ -129,15 +131,15 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               onPressed: () {
                 try {
                   if (paymentName != null) {
-                    final newPayment = 
-                      PaymentHive(
-                        name: paymentName!,
-                        type: type,
-                        date: selectedDate,
-                        occurence: 'once',
-                        amount: double.parse(amount.toStringAsFixed(2)),
-                      );
+                    final newPayment = PaymentHive(
+                      name: paymentName!,
+                      type: type,
+                      date: selectedDate,
+                      occurence: 'once',
+                      amount: double.parse(amount.toStringAsFixed(2)),
+                    );
                     paymentRepository.addPayment(newPayment);
+                    widget.addPaymentCallback();
                     Navigator.of(context).pop();
                   }
                 } catch (err) {
