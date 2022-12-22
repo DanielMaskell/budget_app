@@ -8,7 +8,7 @@ class TotalCalculator extends StatefulWidget {
   final Box<PaymentHive>? paymentBox;
   final Map<dynamic, PaymentHive> payments;
 
-  const TotalCalculator({required Key? key, required this.payments, this.paymentBox});
+  const TotalCalculator({Key? key, required this.payments, this.paymentBox});
 
   @override
   _TotalCalculatorState createState() => _TotalCalculatorState();
@@ -23,10 +23,12 @@ class _TotalCalculatorState extends State<TotalCalculator> {
   @override
   void initState() {
     super.initState();
+    print('Check1 TotalCalculator init');
   }
 
   @override
   Widget build(BuildContext context) {
+    print('Check1 TotalCalculator build');
     total = 0;
     keys = widget.payments.keys.cast<int>().toList();
 

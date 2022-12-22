@@ -35,7 +35,7 @@ void main() async {
   //box.add(PaymentHive(name: 'Test1', type: 'Power', date: DateTime.now(), occurence: 'single', amount: 24.00));
   //box.put('test1', [7, 8, 9]);
  // PaymentHive? tempPayment = box.getAt(0);
- // print('test1: ' + tempPayment!.name);
+ //` print('test1: ' + tempPayment!.name);
 
   runApp(MaterialApp(
     title: 'Flutter Demo',
@@ -47,7 +47,7 @@ void main() async {
       Routes.home: (context) => const HomeScreen(),
       Routes.second: (context) => const SecondScreen(),
       Routes.adduser: (context) => AddUser(),
-      Routes.addpet: (context) => const AddPet(),
+      Routes.addpet: (context) => AddPet(),
       Routes.profile: (context) => const ProfilePage(),
       Routes.login: (context) => LoginPage()
     },

@@ -1,13 +1,14 @@
 import 'package:budget_app/repository/payment_repository.dart';
 import 'package:budget_app/widgets/total_calculated.dart';
 import 'package:flutter/material.dart';
-import 'package:budget_app/repository/data_repository.dart';
-import 'add_payment_dialog.dart';
-import 'models/payment_hive.dart';
+import '../add_payment_dialog.dart';
+import '../models/payment_hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeList extends StatefulWidget {
-  const HomeList({Key? key}) : super(key: key);
+  const HomeList({Key? key, required this.homeListCallback}) : super(key: key);
+
+  final void Function() homeListCallback;
   @override
   _HomeListState createState() => _HomeListState();
 }
@@ -84,7 +85,8 @@ class _HomeListState extends State<HomeList> {
   }
 
   void addPaymentCallback() {
-    print('addPaymentCallback called');
+    print('check1 addPaymentCallback called');
+    widget.homeListCallback();
     setState(() {
       totalCalculatorKey = GlobalKey();
     });

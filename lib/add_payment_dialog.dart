@@ -8,8 +8,10 @@ import 'repository/data_repository.dart';
 import 'package:hive/hive.dart';
 
 class AddPaymentDialog extends StatefulWidget {
-  const AddPaymentDialog({Key? key, required this.addPaymentCallback})
-      : super(key: key);
+  const AddPaymentDialog({
+    Key? key, 
+    required this.addPaymentCallback
+    }) : super(key: key);
 
   final void Function() addPaymentCallback;
 
