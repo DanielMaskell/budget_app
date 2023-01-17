@@ -66,12 +66,10 @@ class _HomeListState extends State<HomeList> {
               );
             },
           ),
-          Flexible(
-              flex: 1,
-              child: TotalCalculator(
-                key: totalCalculatorKey,
-                payments: payments,
-              ))
+          TotalCalculator(
+            key: totalCalculatorKey,
+            payments: payments,
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(

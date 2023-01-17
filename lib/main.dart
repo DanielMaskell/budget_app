@@ -1,10 +1,12 @@
 import 'package:budget_app/models/payment_hive.dart';
 import 'package:budget_app/screens/add_payment.dart';
 import 'package:budget_app/screens/adduser_screen.dart';
+import 'package:budget_app/screens/graph_screen.dart';
 import 'package:budget_app/screens/login_screen.dart';
 import 'package:budget_app/screens/home_screen.dart';
 import 'package:budget_app/screens/test_screen.dart';
 import 'package:budget_app/screens/profile_screen.dart';
+import 'package:budget_app/screens/stats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/routes/Routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,7 +31,7 @@ void main() async {
   Hive.registerAdapter(DateHiveAdapter());
   Hive.registerAdapter(PaymentHiveAdapter());
   var box = await Hive.openBox<PaymentHive>('paymentBoxTest');
-  //box.clear();
+ // box.clear();
   //var box = Hive.box('paymentBox');
   //box.deleteFromDisk();
   //box.add(PaymentHive(name: 'Test1', type: 'Power', date: DateTime.now(), occurence: 'single', amount: 24.00));
@@ -49,7 +51,9 @@ void main() async {
       Routes.adduser: (context) => AddUser(),
       Routes.addpet: (context) => AddPet(),
       Routes.profile: (context) => const ProfilePage(),
-      Routes.login: (context) => LoginPage()
+      Routes.login: (context) => LoginPage(),
+      Routes.graphScreen: (context) => GraphScreen(),
+      Routes.stats: (context) => StatsScreen(),
     },
   ));
 }

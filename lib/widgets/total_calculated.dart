@@ -7,6 +7,7 @@ import '../models/payment.dart';
 class TotalCalculator extends StatefulWidget {
   final Box<PaymentHive>? paymentBox;
   final Map<dynamic, PaymentHive> payments;
+  final double height = 75; 
 
   const TotalCalculator({Key? key, required this.payments, this.paymentBox});
 
@@ -36,6 +37,14 @@ class _TotalCalculatorState extends State<TotalCalculator> {
     for (int i = 0; i < widget.payments.length; i++) {
       total = total + widget.payments[i]!.amount;
     }
-    return Text('Total: ${total.toString()}');
+    return SizedBox(
+      height: widget.height,
+      child: Row(
+        children: [
+          const Text('Total: ', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+          Text('\$${total.toString()}', style: const TextStyle(fontSize: 30, fontWeight: FontWeight.normal),),
+        ],
+      )
+    );
   }
 }

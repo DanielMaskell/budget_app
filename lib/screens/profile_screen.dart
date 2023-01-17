@@ -1,8 +1,10 @@
+import 'package:budget_app/models/payment_hive.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/screens/login_screen.dart';
 import 'package:budget_app/fire_auth.dart';
 import 'package:budget_app/widgets/drawer.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
   //final User user;
@@ -100,6 +102,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
             SizedBox(height: 16.0),
+            ElevatedButton(
+                    onPressed: () async {
+                      emptyBox();
+                    },
+                    child: Text('Delete entries'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                  ),
+            SizedBox(height: 16.0),
             _isSigningOut
                 ? CircularProgressIndicator()
                 : ElevatedButton(
@@ -125,9 +140,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
+            
           ],
         ),
       ),
     );
+  }
+
+  void emptyBox() async {
+    var box = await Hive.openBox<PaymentHive>('paymentBoxTest');
+    box.clear();
   }
 }

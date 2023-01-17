@@ -11,15 +11,25 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           _createHeader(),
           _createDrawerItem(
-              icon: Icons.contacts,
-              text: 'Home',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.home)),
+            icon: Icons.contacts,
+            text: 'Home',
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, Routes.home)),
           _createDrawerItem(
-              icon: Icons.event,
-              text: 'Payments',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.addpet)),
+            icon: Icons.event,
+            text: 'Payments',
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, Routes.addpet)),
+          _createDrawerItem(
+            icon: Icons.event,
+            text: 'Stats',
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, Routes.stats)),
+          _createDrawerItem(
+            icon: Icons.event,
+            text: 'Graphs',
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, Routes.graphScreen)),
           const Divider(),
           _createDrawerItem(
               icon: Icons.event,
