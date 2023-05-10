@@ -9,86 +9,131 @@ import 'package:hive_flutter/hive_flutter.dart';
 class GraphScreen extends StatefulWidget {
   const GraphScreen({
     Key? key,
-    }) : super(key: key);
+  }) : super(key: key);
 
-    static const String routeName = '/graphscreen';
+  static const String routeName = '/graphscreen';
 
-    @override 
-    _GraphScreen createState() => _GraphScreen();
+  @override
+  _GraphScreen createState() => _GraphScreen();
 }
 
 class _GraphScreen extends State<GraphScreen> {
-
-  // List<_BudgetData> data = [
-  //   _BudgetData('Jan', 35),
-  //   _BudgetData('Feb', 28),
-  //   _BudgetData('Mar', 34),
-  //   _BudgetData('Apr', 32),
-  //   _BudgetData('May', 40)
-  // ];
-
-  List<_BudgetData> tempList = [];
+  List<BudgetData> tempList = [];
+  List<BudgetData> monthData = [];
   final PaymentRepository paymentRepository = PaymentRepository();
   late final Map<dynamic, PaymentHive> payments = paymentRepository.getBox();
   late Box<PaymentHive> paymentBox;
+  int month = 1;
+  final Map<String, int> months = {
+    'January': 1,
+    'February': 2,
+    'March': 3,
+    'April': 4,
+    'May': 5,
+    'June': 6,
+    'July': 7,
+    'August': 8,
+    'September': 9,
+    'October': 10,
+    'November': 11,
+    'December': 12
+  };
 
-  @override 
+  @override
   void initState() {
     super.initState();
     paymentBox = Hive.box<PaymentHive>('paymentBoxTest');
-    print('check2 grpah screen init');
+    updateMonthData(month);
   }
 
-  @override 
-  Widget build(BuildContext context) {
-
+  updateMonthData(int newMonth) {
+    tempList = [];
     double total = 0;
-    int counter = 0;
+    monthData = [];
+
     paymentBox.toMap().forEach((key, value) {
-      total = total + value.amount;
       DateTime tempDate = DateTime(value.date.year, value.date.month, value.date.day);
-      _BudgetData tempItem = _BudgetData(DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate)), total);
+      BudgetData tempItem = BudgetData(DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!, value.amount);
       tempList.add(tempItem);
-      counter++;
     });
+    tempList.sort(((a, b) => b.compareTo(a)));
 
-    print('check2 counter: $counter');
-    // for(int i=0;i<paymentBox.length;i++){
-    //   paymentBox.keys.map((e) => null)
-    // }
-    /*for(int i=0;i<data.length;i++){
-      total = total + data[i].amount;
-      _BudgetData tempItem = _BudgetData(data[i].month, total);
-      tempList.add(tempItem);
-    } */
+    for (BudgetData item in tempList) {
+      if (item.date.month == month) {
+        total = total + item.amount;
+        DateTime tempDate = DateTime(item.date.year, item.date.month, item.date.day);
+        BudgetData tempItem = BudgetData(DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!, total);
+        monthData.add(tempItem);
+      }
+    }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Payments'),
       ),
-      drawer: SafeArea(child: AppDrawer()),
-      body: Center(
-        child: SfCartesianChart(
-          primaryXAxis: CategoryAxis(),
-          title: ChartTitle(text: 'Test Chart'),
-          legend: Legend(isVisible: true),
-          series: <ChartSeries<_BudgetData, String>>[
-                LineSeries<_BudgetData, String>(
-                    dataSource: tempList,
-                    xValueMapper: (_BudgetData sales, _) => sales.date.toString(),
-                    yValueMapper: (_BudgetData sales, _) => sales.amount,
-                    name: 'Sales',
-                    // Enable data label
-                    dataLabelSettings: DataLabelSettings(isVisible: true))
-        ])
-      )
+      drawer: const SafeArea(child: AppDrawer()),
+      body: Column(children: [
+        DropdownButton<int>(
+          value: month,
+          items: months
+              .map((name, value) {
+                return MapEntry(
+                    name,
+                    DropdownMenuItem<int>(
+                      value: value,
+                      child: Text(name),
+                    ));
+              })
+              .values
+              .toList(),
+          onChanged: ((value) {
+            setState(() {
+              month = value as int;
+            });
+            updateMonthData(value as int);
+          }),
+        ),
+        Expanded(
+          child: SfCartesianChart(
+            primaryXAxis: CategoryAxis(
+              labelPlacement: LabelPlacement.onTicks,
+            ),
+            title: ChartTitle(text: 'Test Chart'),
+            legend: Legend(isVisible: false),
+            enableAxisAnimation: true,
+            series: <ChartSeries<BudgetData, String>>[
+              LineSeries<BudgetData, String>(
+                dataSource: monthData,
+                xValueMapper: (BudgetData sales, _) => sales.date.day.toString(),
+                yValueMapper: (BudgetData sales, _) => sales.amount,
+                name: 'Expenses',
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+              )
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }
 
-class _BudgetData {
-  _BudgetData(this.date, this.amount);
+class BudgetData implements Comparable<BudgetData> {
+  BudgetData(this.date, this.amount);
 
-  final DateTime? date;
+  final DateTime date;
   final double amount;
+
+  @override
+  int compareTo(BudgetData other) {
+    if (date.isBefore(other.date)) {
+      return 1;
+    } else if (date.isAfter(other.date)) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
 }

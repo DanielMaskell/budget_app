@@ -24,7 +24,6 @@ class _HomeScreenState extends State {
   void initState() {
     super.initState();
     openBox();
-    //addUserToDb();
   }
 
   @override
@@ -33,12 +32,7 @@ class _HomeScreenState extends State {
   }
 
   void openBox() async {
-    //box = await Hive.openBox('paymentBox');
     box = Hive.box<PaymentHive>('paymentBoxTest');
-    //temp = box.get('test2');
-    //int tempLength = box.(length)
-    //box.getRange(0, 5);
-    print('temp:' + box.values.toString());
   }
 
   @override
@@ -47,15 +41,9 @@ class _HomeScreenState extends State {
       appBar: AppBar(
         title: const Text('Home Screen'),
       ),
-      drawer: SafeArea(child: AppDrawer()),
+      drawer: const SafeArea(child: AppDrawer()),
       body: Center(
         child: Text('Box Length: ' + box.length.toString()),
-        /*child: ElevatedButton(
-          onPressed: () {
-            // Navigate to the second screen when tapped.
-          },
-          child: const Text('Launch screen'),
-        ),*/
       ),
     );
   }

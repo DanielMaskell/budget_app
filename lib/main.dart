@@ -14,7 +14,6 @@ import 'firebase_options.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'models/date_hive.dart';
-import 'models/payment.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,38 +21,32 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  Future<FirebaseApp> _initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-    return firebaseApp;
-  }
+  // Future<FirebaseApp> _initializeFirebase() async {
+  //   FirebaseApp firebaseApp = await Firebase.initializeApp();
+  //   return firebaseApp;
+  // }
 
   await Hive.initFlutter();
   Hive.registerAdapter(DateHiveAdapter());
   Hive.registerAdapter(PaymentHiveAdapter());
   var box = await Hive.openBox<PaymentHive>('paymentBoxTest');
- // box.clear();
-  //var box = Hive.box('paymentBox');
-  //box.deleteFromDisk();
-  //box.add(PaymentHive(name: 'Test1', type: 'Power', date: DateTime.now(), occurence: 'single', amount: 24.00));
-  //box.put('test1', [7, 8, 9]);
- // PaymentHive? tempPayment = box.getAt(0);
- //` print('test1: ' + tempPayment!.name);
+  // box.clear();
 
   runApp(MaterialApp(
     title: 'Flutter Demo',
     theme: ThemeData(primarySwatch: Colors.indigo),
 
-    home: LoginPage(),
+    home: const LoginPage(),
     //home: const HomeScreen(),
     routes: {
       Routes.home: (context) => const HomeScreen(),
       Routes.second: (context) => const SecondScreen(),
       Routes.adduser: (context) => AddUser(),
-      Routes.addpet: (context) => AddPet(),
+      Routes.addpet: (context) => const AddPayment(),
       Routes.profile: (context) => const ProfilePage(),
-      Routes.login: (context) => LoginPage(),
-      Routes.graphScreen: (context) => GraphScreen(),
-      Routes.stats: (context) => StatsScreen(),
+      Routes.login: (context) => const LoginPage(),
+      Routes.graphScreen: (context) => const GraphScreen(),
+      Routes.stats: (context) => const StatsScreen(),
     },
   ));
 }

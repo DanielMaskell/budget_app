@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class FlexibleAppBar extends SliverAppBar {
   static const double height = 256.0;
 
-  FlexibleAppBar(String title, String imageUrl) : super(
-    pinned: true,
+  FlexibleAppBar(String title, String imageUrl, {Key? key}) : super(
+    key: key, pinned: true,
     expandedHeight: height,
     flexibleSpace: FlexibleSpaceBar(
         title: Text(title),
@@ -23,7 +23,7 @@ class FlexibleAppBar extends SliverAppBar {
                 height: height
             ),
 
-            DecoratedBox(
+            const DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: FractionalOffset(0.5, 0.6),

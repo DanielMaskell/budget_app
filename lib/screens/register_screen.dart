@@ -6,6 +6,8 @@ import 'package:budget_app/fire_auth.dart';
 import 'package:budget_app/validator.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -33,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Register'),
+          title: const Text('Register'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -55,13 +57,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintText: "Name",
                           errorBorder: UnderlineInputBorder(
                             borderRadius: BorderRadius.circular(6.0),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.red,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 16.0),
+                      const SizedBox(height: 16.0),
                       TextFormField(
                         controller: _emailTextController,
                         focusNode: _focusEmail,
@@ -72,13 +74,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintText: "Email",
                           errorBorder: UnderlineInputBorder(
                             borderRadius: BorderRadius.circular(6.0),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.red,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 16.0),
+                      const SizedBox(height: 16.0),
                       TextFormField(
                         controller: _passwordTextController,
                         focusNode: _focusPassword,
@@ -90,15 +92,15 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintText: "Password",
                           errorBorder: UnderlineInputBorder(
                             borderRadius: BorderRadius.circular(6.0),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.red,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 32.0),
+                      const SizedBox(height: 32.0),
                       _isProcessing
-                          ? CircularProgressIndicator()
+                          ? const CircularProgressIndicator()
                           : Row(
                               children: [
                                 Expanded(
@@ -108,14 +110,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                         _isProcessing = true;
                                       });
 
-                                      if (_registerFormKey.currentState!
-                                          .validate()) {
-                                        User? user = await FireAuth
-                                            .registerUsingEmailPassword(
+                                      if (_registerFormKey.currentState!.validate()) {
+                                        User? user = await FireAuth.registerUsingEmailPassword(
                                           name: _nameTextController.text,
                                           email: _emailTextController.text,
-                                          password:
-                                              _passwordTextController.text,
+                                          password: _passwordTextController.text,
                                         );
 
                                         setState(() {
@@ -123,18 +122,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                         });
 
                                         if (user != null) {
-                                          Navigator.of(context)
-                                              .pushAndRemoveUntil(
+                                          Navigator.of(context).pushAndRemoveUntil(
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProfilePage(),//user: user
+                                              builder: (context) => const ProfilePage(),
                                             ),
                                             ModalRoute.withName('/'),
                                           );
                                         }
                                       }
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Sign up',
                                       style: TextStyle(color: Colors.white),
                                     ),

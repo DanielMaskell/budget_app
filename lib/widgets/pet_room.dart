@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'models/payment.dart';
+import '../models/payment.dart';
 import 'payment_details.dart';
 
 class PaymentRoom extends StatelessWidget {
@@ -11,7 +11,6 @@ class PaymentRoom extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          // TODO Change title
           title: Text(payment.name),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back),
@@ -19,7 +18,6 @@ class PaymentRoom extends StatelessWidget {
                 Navigator.pop(context);
               }),
         ),
-        // TODO Add pet detail
         body: PaymentDetail(payment: payment),
       ),
     );

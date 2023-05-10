@@ -1,7 +1,8 @@
 import 'package:budget_app/repository/payment_repository.dart';
+import 'package:budget_app/widgets/paymentListCard.dart';
 import 'package:budget_app/widgets/total_calculated.dart';
 import 'package:flutter/material.dart';
-import '../add_payment_dialog.dart';
+import 'add_payment_dialog.dart';
 import '../models/payment_hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -9,22 +10,40 @@ class HomeList extends StatefulWidget {
   const HomeList({Key? key, required this.homeListCallback}) : super(key: key);
 
   final void Function() homeListCallback;
+
   @override
   _HomeListState createState() => _HomeListState();
 }
 
 class _HomeListState extends State<HomeList> {
+  List<PaymentHive> monthData = [];
   final PaymentRepository paymentRepository = PaymentRepository();
   late final Map<dynamic, PaymentHive> payments = paymentRepository.getBox();
   late Box<PaymentHive> paymentBox;
   GlobalKey totalCalculatorKey = GlobalKey();
+  int month = 3;
+  final Map<String, int> months = {
+    'January': 1,
+    'February': 2,
+    'March': 3,
+    'April': 4,
+    'May': 5,
+    'June': 6,
+    'July': 7,
+    'August': 8,
+    'September': 9,
+    'October': 10,
+    'November': 11,
+    'December': 12
+  };
 
-  final boldStyle =
-      const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+  final boldStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+
   @override
   void initState() {
     super.initState();
     paymentBox = Hive.box<PaymentHive>('paymentBoxTest');
+    updateMonthData(month);
   }
 
   @override
@@ -32,35 +51,96 @@ class _HomeListState extends State<HomeList> {
     return _buildHome(context);
   }
 
+  updateMonthData(int newMonth) {
+    List<PaymentHive> tempList = [];
+    monthData = [];
+
+    paymentBox.toMap().forEach((key, value) {
+      PaymentHive tempItem = PaymentHive(
+        name: value.name,
+        type: value.type,
+        date: value.date,
+        occurence: value.occurence,
+        amount: value.amount,
+      );
+      tempList.add(tempItem);
+    });
+    tempList.sort(((a, b) => b.compareTo(a)));
+
+    for (PaymentHive item in tempList) {
+      if (item.date.month == month) {
+        monthData.add(item);
+      }
+    }
+    setState(() {});
+  }
+
+  removePaymentCallback(PaymentHive payment, int id) {
+    paymentRepository.removePayment(payment, id);
+    updateMonthData(month);
+  }
+
+  void editPaymentCallback({PaymentHive? payment, int? id}) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AddPaymentDialog(
+          editing: true,
+          payment: payment,
+          id: id,
+          addPaymentCallback: addPaymentCallback,
+        );
+      },
+    );
+  }
+
   Widget _buildHome(BuildContext context) {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          DropdownButton<int>(
+            value: month,
+            items: months
+                .map((name, value) {
+                  return MapEntry(
+                      name,
+                      DropdownMenuItem<int>(
+                        value: value,
+                        child: Text(name),
+                      ));
+                })
+                .values
+                .toList(),
+            onChanged: ((value) {
+              setState(() {
+                month = value as int;
+              });
+              updateMonthData(value as int);
+            }),
+          ),
           ValueListenableBuilder(
             valueListenable: paymentBox.listenable(),
             builder: (context, Box<PaymentHive> payments, _) {
-              List<int> keys = payments.keys.cast<int>().toList();
+              List<PaymentHive> paymentsList = [];
+              paymentsList = payments.values.where((element) => element.date.month == month).toList();
+              paymentsList.sort();
               return Flexible(
                 flex: 4,
                 child: ListView.separated(
                   separatorBuilder: (_, index) => const Divider(
                     height: 10.0,
                   ),
-                  itemCount: keys.length,
+                  itemCount: paymentsList.length,
                   itemBuilder: (_, index) {
-                    final int key = keys[index];
-                    final PaymentHive? data = payments.get(key);
-                    return Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0)),
-                        color: Colors.grey,
-                        child: ListTile(
-                          title: Text(
-                            data!.name,
-                          ),
-                          subtitle: Text(data.amount.toString()),
-                        ));
+                    final PaymentHive? data = paymentsList.isNotEmpty ? paymentsList[index] : null;
+
+                    return PaymentListCard(
+                      payment: data,
+                      removePaymentCallback: removePaymentCallback,
+                      id: index,
+                      editPaymentCallback: editPaymentCallback,
+                    );
                   },
                 ),
               );
@@ -68,7 +148,7 @@ class _HomeListState extends State<HomeList> {
           ),
           TotalCalculator(
             key: totalCalculatorKey,
-            payments: payments,
+            payments: monthData,
           )
         ],
       ),
@@ -83,7 +163,6 @@ class _HomeListState extends State<HomeList> {
   }
 
   void addPaymentCallback() {
-    print('check1 addPaymentCallback called');
     widget.homeListCallback();
     setState(() {
       totalCalculatorKey = GlobalKey();

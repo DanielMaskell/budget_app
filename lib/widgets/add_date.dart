@@ -1,18 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-
-import 'models/payment.dart';
-import 'widgets/text_field.dart';
-import 'models/date.dart';
-import 'widgets/date_picker.dart';
-import 'widgets/done_check_box.dart';
+import '../models/payment.dart';
+import 'text_field.dart';
+import 'date_picker.dart';
 
 class AddDate extends StatefulWidget {
   final Payment payment;
   final Function callback;
-  const AddDate({Key? key, required this.payment, required this.callback})
-      : super(key: key);
+  const AddDate({Key? key, required this.payment, required this.callback}) : super(key: key);
   @override
   _AddDateState createState() => _AddDateState();
 }
@@ -48,6 +42,7 @@ class _AddDateState extends State<AddDate> {
                     if (value == null || value.isEmpty) {
                       return 'Enter the date Name';
                     }
+                    return null;
                   },
                   inputType: TextInputType.text,
                   onChanged: (value) {
@@ -62,16 +57,11 @@ class _AddDateState extends State<AddDate> {
                       if (value == null || value.isEmpty) {
                         return 'Enter the Date';
                       }
+                      return null;
                     },
                     onChanged: (text) {
                       date = text;
                     }),
-                /*DoneCheckBox(
-                    name: 'Done',
-                    value: done,
-                    onChanged: (text) {
-                      done = text ?? done;
-                    }),*/
               ],
             ),
           ),
@@ -87,8 +77,6 @@ class _AddDateState extends State<AddDate> {
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
                   Navigator.of(context).pop();
-                  //final newDate = Date(dateName, date: date, done: done);
-                  //payment.date.add(date);
                 }
                 widget.callback();
               },

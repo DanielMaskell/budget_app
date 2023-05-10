@@ -1,12 +1,11 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'repository/data_repository.dart';
-import 'models/payment.dart';
+import '../repository/data_repository.dart';
+import '../models/payment.dart';
 import 'add_date.dart';
 import 'date_list.dart';
-import 'widgets/text_field.dart';
-import 'models/date.dart';
-import 'widgets/choose_chips.dart';
+import 'text_field.dart';
+import 'choose_chips.dart';
 
 class PaymentDetail extends StatefulWidget {
   final Payment payment;
@@ -31,12 +30,8 @@ class _PaymentDetailState extends State<PaymentDetail> {
     type = widget.payment.type;
     name = widget.payment.name;
     paymentTypes = [
-      CategoryOption(
-          type: 'recurring',
-          name: 'Recurring',
-          isSelected: type == 'recurring'),
-      CategoryOption(
-          type: 'single', name: 'Single', isSelected: type == 'single'),
+      CategoryOption(type: 'recurring', name: 'Recurring', isSelected: type == 'recurring'),
+      CategoryOption(type: 'single', name: 'Single', isSelected: type == 'single'),
       CategoryOption(type: 'other', name: 'Other', isSelected: type == 'other'),
     ];
     super.initState();
@@ -61,6 +56,7 @@ class _PaymentDetailState extends State<PaymentDetail> {
                   if (value == null || value.isEmpty) {
                     return 'Please input name';
                   }
+                  return null;
                 },
                 inputType: TextInputType.name,
                 onChanged: (value) => name = value ?? name,
@@ -70,10 +66,10 @@ class _PaymentDetailState extends State<PaymentDetail> {
                 options: paymentTypes,
                 onOptionTap: (value) {
                   setState(() {
-                    paymentTypes.forEach((element) {
+                    for (var element in paymentTypes) {
                       type = value.type;
                       element.isSelected = element.type == value.type;
-                    });
+                    }
                   });
                 },
               ),
@@ -81,7 +77,9 @@ class _PaymentDetailState extends State<PaymentDetail> {
               UserTextField(
                 name: 'notes',
                 initialValue: widget.payment.description ?? '',
-                validator: (value) {},
+                validator: (value) {
+                  return null;
+                },
                 inputType: TextInputType.text,
                 onChanged: (value) => description = value,
               ),
@@ -116,8 +114,7 @@ class _PaymentDetailState extends State<PaymentDetail> {
                         Navigator.of(context).pop();
                         widget.payment.name = name;
                         widget.payment.type = type;
-                        widget.payment.description =
-                            description ?? widget.payment.description;
+                        widget.payment.description = description ?? widget.payment.description;
 
                         repository.updatePayment(widget.payment);
                       }
@@ -138,7 +135,7 @@ class _PaymentDetailState extends State<PaymentDetail> {
 
   Widget buildRow(DateTime date) {
     return Row(
-      children: <Widget>[
+      children: const <Widget>[
         /*Expanded(
           flex: 1,
           child: Text(date),

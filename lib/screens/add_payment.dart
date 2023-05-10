@@ -2,39 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:budget_app/widgets/drawer.dart';
 import '../widgets/home_list.dart';
 
-class AddPet extends StatefulWidget {
-  AddPet({
-    Key? key, 
+class AddPayment extends StatefulWidget {
+  const AddPayment({
+    Key? key,
   }) : super(key: key);
 
   static const String routeName = '/addpayment';
 
   @override
-  State<StatefulWidget> createState() => _AddPetState();
+  State<StatefulWidget> createState() => _AddPaymentState();
 }
 
-class _AddPetState extends State<AddPet> {
-
-  @override 
-  void initState(){
+class _AddPaymentState extends State<AddPayment> {
+  @override
+  void initState() {
     super.initState();
   }
 
-  GlobalKey? homeListKey = GlobalKey();
+  GlobalKey homeListKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payments'),
-      ),
-      drawer: SafeArea(child: AppDrawer()),
-      body: Center(child: HomeList(key: homeListKey, homeListCallback: homeListCallback,))
-    );
+        appBar: AppBar(
+          title: const Text('Payments'),
+        ),
+        drawer: const SafeArea(child: AppDrawer()),
+        body: Center(
+          child: HomeList(
+            key: homeListKey,
+            homeListCallback: homeListCallback,
+          ),
+        ));
   }
 
-  void homeListCallback(){
-    print('check homelist callback');
+  void homeListCallback() {
     setState(() {
       homeListKey = GlobalKey();
     });

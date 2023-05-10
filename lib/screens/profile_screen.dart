@@ -7,10 +7,8 @@ import 'package:budget_app/widgets/drawer.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
-  //final User user;
   static const String routeName = '/profile';
-  const ProfilePage();
-  
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -26,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     _currentUser = auth.currentUser;
-    
+
     super.initState();
   }
 
@@ -34,43 +32,35 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
-      drawer: SafeArea(
-        child: AppDrawer()
-      ),
+      drawer: const SafeArea(child: AppDrawer()),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'NAME: ${_currentUser?.displayName}',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Text(
               'EMAIL: ${_currentUser?.email}',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             _currentUser!.emailVerified
                 ? Text(
                     'Email verified',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: Colors.green),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.green),
                   )
                 : Text(
                     'Email not verified',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: Colors.red),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.red),
                   ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             _isSendingVerification
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -84,11 +74,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             _isSendingVerification = false;
                           });
                         },
-                        child: Text('Verify email'),
+                        child: const Text('Verify email'),
                       ),
-                      SizedBox(width: 8.0),
+                      const SizedBox(width: 8.0),
                       IconButton(
-                        icon: Icon(Icons.refresh),
+                        icon: const Icon(Icons.refresh),
                         onPressed: () async {
                           User? user = await FireAuth.refreshUser(_currentUser!);
 
@@ -101,22 +91,22 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
-                    onPressed: () async {
-                      emptyBox();
-                    },
-                    child: Text('Delete entries'),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                  ),
-            SizedBox(height: 16.0),
+              onPressed: () async {
+                emptyBox();
+              },
+              child: const Text('Delete entries'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16.0),
             _isSigningOut
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: () async {
                       setState(() {
@@ -128,11 +118,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       });
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => LoginPage(),
+                          builder: (context) => const LoginPage(),
                         ),
                       );
                     },
-                    child: Text('Sign out'),
+                    child: const Text('Sign out'),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.red,
                       shape: RoundedRectangleBorder(
@@ -140,7 +130,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-            
           ],
         ),
       ),

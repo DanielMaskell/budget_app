@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-//import 'package:budget_app/models/pet.dart';
 import 'package:budget_app/models/payment.dart';
 
 class DataRepository {
-  final CollectionReference collection =
-      FirebaseFirestore.instance.collection('payments');
+  final CollectionReference collection = FirebaseFirestore.instance.collection('payments');
 
   Stream<QuerySnapshot> getStream() {
     return collection.snapshots();

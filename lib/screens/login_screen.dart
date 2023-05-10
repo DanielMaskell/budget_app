@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:budget_app/screens/profile_screen.dart';
 import 'package:budget_app/screens/register_screen.dart';
 import 'package:budget_app/fire_auth.dart';
 import 'package:budget_app/validator.dart';
@@ -10,6 +9,8 @@ import 'package:budget_app/repository/user_repository.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = '/login';
+
+  const LoginPage({Key? key}) : super(key: key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -72,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(bottom: 24.0),
                       child: Text(
                         'Login',
-                        style: Theme.of(context).textTheme.headline1,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                     ),
                     Form(
@@ -117,8 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                           _isProcessing
                               ? const CircularProgressIndicator()
                               : Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: ElevatedButton(
@@ -126,17 +126,14 @@ class _LoginPageState extends State<LoginPage> {
                                           _focusEmail.unfocus();
                                           _focusPassword.unfocus();
 
-                                          if (_formKey.currentState!
-                                              .validate()) {
+                                          if (_formKey.currentState!.validate()) {
                                             setState(() {
                                               _isProcessing = true;
                                             });
 
-                                            User? user = await FireAuth
-                                                .signInUsingEmailPassword(
+                                            User? user = await FireAuth.signInUsingEmailPassword(
                                               email: _emailTextController.text,
-                                              password:
-                                                  _passwordTextController.text,
+                                              password: _passwordTextController.text,
                                             );
 
                                             setState(() {
@@ -145,11 +142,9 @@ class _LoginPageState extends State<LoginPage> {
 
                                             if (user != null) {
                                               addUserToDb();
-                                              Navigator.of(context)
-                                                  .pushReplacement(
+                                              Navigator.of(context).pushReplacement(
                                                 MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const HomeScreen(),
+                                                  builder: (context) => const HomeScreen(),
                                                 ),
                                               );
                                             }
@@ -167,8 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                                         onPressed: () {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RegisterPage(),
+                                              builder: (context) => const RegisterPage(),
                                             ),
                                           );
                                         },

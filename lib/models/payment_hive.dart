@@ -3,35 +3,64 @@ import 'package:hive/hive.dart';
 part 'payment_hive.g.dart';
 
 @HiveType(typeId: 1)
-class PaymentHive {
+class PaymentHive extends HiveObject implements Comparable<PaymentHive> {
   @HiveField(0)
-  final String name;
+  dynamic id;
 
   @HiveField(1)
-  final String? description;
+  final String name;
 
   @HiveField(2)
-  final String type;
+  final String? description;
 
   @HiveField(3)
-  final DateTime date;
+  final String type;
 
   @HiveField(4)
-  final int? referenceId;
+  final DateTime date;
 
   @HiveField(5)
-  final String occurence;
+  final int? referenceId;
 
   @HiveField(6)
+  final String occurence;
+
+  @HiveField(7)
   final double amount;
 
   PaymentHive({
+    this.id,
     required this.name,
     this.description,
     required this.type,
     required this.date,
     this.referenceId,
     required this.occurence,
-    required this.amount
+    required this.amount,
   });
+
+  @override
+  int compareTo(PaymentHive other) {
+    if (date.isBefore(other.date)) {
+      return -1;
+    } else if (date.isAfter(other.date)) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  String? print() {
+    String string = '{\n';
+    string += ' id: ' + (id.toString() + ',\n');
+    string += ' name: ' + (name + ',\n');
+    string += ' description: ' + (description ?? 'null' + ',\n');
+    string += ' type: ' + (type + ',\n');
+    string += ' date: ' + (date.toString() + ',\n');
+    string += ' referenceId: ' + (referenceId.toString() + ',\n');
+    string += ' occurence: ' + (occurence + ',\n');
+    string += ' amount: ' + (amount.toString() + ',\n');
+    string += '},\n';
+    return string;
+  }
 }
