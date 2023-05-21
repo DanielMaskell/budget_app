@@ -1,6 +1,7 @@
 import 'package:budget_app/models/payment_hive.dart';
 import 'package:budget_app/screens/add_payment.dart';
 import 'package:budget_app/screens/adduser_screen.dart';
+import 'package:budget_app/screens/csv_screen.dart';
 import 'package:budget_app/screens/graph_screen.dart';
 import 'package:budget_app/screens/login_screen.dart';
 import 'package:budget_app/screens/home_screen.dart';
@@ -47,6 +48,7 @@ void main() async {
       Routes.login: (context) => const LoginPage(),
       Routes.graphScreen: (context) => const GraphScreen(),
       Routes.stats: (context) => const StatsScreen(),
+      Routes.csv: (context) => const CsvPage(),
     },
   ));
 }

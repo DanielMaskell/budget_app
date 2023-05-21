@@ -1,3 +1,4 @@
+import 'package:budget_app/screens/csv_screen.dart';
 import 'package:budget_app/screens/home_screen.dart';
 import 'package:budget_app/screens/test_screen.dart';
 import 'package:budget_app/screens/adduser_screen.dart';
@@ -16,4 +17,5 @@ class Routes {
   static const String login = LoginPage.routeName;
   static const String graphScreen = GraphScreen.routeName;
   static const String stats = StatsScreen.routeName;
+  static const String csv = CsvPage.routeName;
 }
