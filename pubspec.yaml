@@ -13,15 +13,15 @@ dependencies:
     sdk: flutter
   csv: ^5.0.2
   cupertino_icons: ^1.0.2
-  firebase_core: ^1.13.1
-  cloud_firestore: ^3.1.10
-  intl: ^0.17.0
-  flutter_datetime_picker: ^1.5.1
-  firebase_auth: ^3.5.0
-  hive: ^2.0.5
-  hive_flutter: ^1.1.0
-  syncfusion_flutter_charts: ^20.4.38
-  pdf_text: ^0.5.0
+  firebase_core: 2.13.1
+  cloud_firestore: 4.8.0
+  intl: 0.17.0
+  flutter_datetime_picker: 1.5.1
+  firebase_auth: 4.6.2
+  hive: 2.0.5
+  hive_flutter: 1.1.0
+  syncfusion_flutter_charts: 20.4.38
+  pdf_text: 0.5.0
 
 dev_dependencies:
   flutter_test:
