@@ -1,9 +1,14 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:budget_app/repository/payment_repository.dart';
 import 'package:flutter/services.dart';
-
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
+import 'package:budget_app/widgets/drawer.dart';
+import 'package:budget_app/models/payment_hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CsvPage extends StatefulWidget {
   static const String routeName = '/csv';
@@ -17,14 +22,36 @@ class CsvPage extends StatefulWidget {
 class _CsvPageState extends State<CsvPage> {
   // Directory appDocDir = await getApplicationDocumentsDirectory();
   //   String appDocPath = appDocDir.path;
+  final PaymentRepository paymentRepository = PaymentRepository();
+  Box<PaymentHive> box = Hive.box<PaymentHive>('paymentBoxTest');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Budget App'),
+      appBar: AppBar(
+        title: const Text('Budget App'),
+      ),
+      drawer: const SafeArea(child: AppDrawer()),
+      body: Center(
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () => fileSearch(),
+              child: Text('Add CSV'),
+            ),
+            const Spacer(),
+            ElevatedButton(
+              child: Text('Clear Box: ${box.length.toString()}'),
+              onPressed: () async {
+                // var box = await Hive.box<PaymentHive>('paymentBoxTest1');
+                box.clear();
+              },
+            ),
+          ],
         ),
-        body: FutureBuilder(
+      ),
+    );
+    /*body: FutureBuilder(
             future: loadingCsvData('test_app/assets/test.csv'),
             builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
               print(snapshot.data.toString());
@@ -44,7 +71,7 @@ class _CsvPageState extends State<CsvPage> {
                   : const Center(
                       child: CircularProgressIndicator(),
                     );
-            }));
+            }));*/
   }
 
   Future<List<List<dynamic>>> loadingCsvData(String path) async {
@@ -56,11 +83,86 @@ class _CsvPageState extends State<CsvPage> {
     //       const CsvToListConverter(),
     //     )
     //     .toList();
+
+    /* working with test
     final csvFile = await rootBundle.loadString('assets/test.csv');
     List<List<dynamic>> csvTable = const CsvToListConverter().convert(csvFile);
 
     print("csvTable: $csvTable");
 
-    return csvTable;
+    return csvTable;*/
+
+    final csvFile = new File(path).openRead();
+    return await csvFile
+        .transform(utf8.decoder)
+        .transform(CsvToListConverter())
+        .toList();
+  }
+
+  void fileSearch() async {
+    // var status = await Permission.storage.
+    if (await Permission.storage.isPermanentlyDenied) {
+      // The user opted to never again see the permission request dialog for this
+      // app. The only way to change the permission's status now is to let the
+      // user manually enable it in the system settings.
+      openAppSettings();
+    }
+    // requestPermission(Permission.storage);
+    print('---- permission status: ${Permission.storage.isGranted.toString()}');
+    if (await requestPermission(Permission.storage)) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        var data = await loadingCsvData(file.path);
+        addCsvData(data);
+      } else {
+        // User canceled the picker
+      }
+    } else {
+      print('---- no permission showing');
+    }
+  }
+
+  void addCsvData(List<dynamic> data) async {
+    int counter = 0;
+    for (dynamic d in data) {
+      counter++;
+      if (d.length == 7 && counter > 7) {
+        try {
+          String newDate = d[0].toString().replaceAll('/', '-');
+          // print('newDate: $newDate');
+          print('d: ${d.toString()}');
+          PaymentHive newPayment = PaymentHive(
+            name: d[4],
+            type: '',
+            date: DateTime.parse(newDate),
+            occurence: 'single',
+            amount: d[6],
+            referenceId: d[1],
+          );
+          // print('newPayment: ${newPayment.toString()}');
+
+          var addingResult = await paymentRepository.addPayment(newPayment);
+          print(
+              'Adding payment ${newPayment.referenceId} success: $addingResult');
+        } catch (e) {
+          print('error adding payment: ${e.toString()}');
+        }
+      }
+    }
+  }
+
+  Future<bool> requestPermission(Permission permission) async {
+    print('request permission called');
+    if (await permission.isGranted) {
+      return true;
+    } else {
+      var result = await permission.request();
+      if (result == PermissionStatus.granted) {
+        return true;
+      }
+    }
+    return false;
   }
 }
