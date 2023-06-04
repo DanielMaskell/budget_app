@@ -145,7 +145,8 @@ class _CsvPageState extends State<CsvPage> {
 
           var addingResult = await paymentRepository.addPayment(newPayment);
           print(
-              'Adding payment ${newPayment.referenceId} success: $addingResult');
+              'Adding payment ${newPayment.referenceId} success: ${addingResult.toInt()}');
+          setState(() {});
         } catch (e) {
           print('error adding payment: ${e.toString()}');
         }

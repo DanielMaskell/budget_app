@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'date.dart';
 
 class Payment extends Comparable {
   String name;
@@ -10,10 +9,17 @@ class Payment extends Comparable {
   String occurence;
   double amount;
 
-  Payment({required this.name, this.description, required this.type, required this.date, required this.occurence, required this.amount});
+  Payment(
+      {required this.name,
+      this.description,
+      required this.type,
+      required this.date,
+      required this.occurence,
+      required this.amount});
 
   factory Payment.fromSnapshot(DocumentSnapshot snapshot) {
-    final newPayment = Payment.fromJson(snapshot.data() as Map<String, dynamic>);
+    final newPayment =
+        Payment.fromJson(snapshot.data() as Map<String, dynamic>);
     newPayment.referenceId = snapshot.reference.id;
     return newPayment;
   }

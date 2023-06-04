@@ -30,15 +30,14 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(DateHiveAdapter());
   Hive.registerAdapter(PaymentHiveAdapter());
-  var box = await Hive.openBox<PaymentHive>('paymentBoxTest');
+
+  await Hive.openBox<PaymentHive>('paymentBoxTest');
   // box.clear();
 
   runApp(MaterialApp(
     title: 'Flutter Demo',
     theme: ThemeData(primarySwatch: Colors.indigo),
-
     home: const LoginPage(),
-    //home: const HomeScreen(),
     routes: {
       Routes.home: (context) => const HomeScreen(),
       Routes.second: (context) => const SecondScreen(),
