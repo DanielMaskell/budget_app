@@ -44,7 +44,9 @@ class _CsvPageState extends State<CsvPage> {
               child: Text('Clear Box: ${box.length.toString()}'),
               onPressed: () async {
                 // var box = await Hive.box<PaymentHive>('paymentBoxTest1');
-                box.clear();
+                var result = await box.clear();
+                print('Trying to clear ${box.name} box: ${result}');
+                setState(() {});
               },
             ),
           ],

@@ -1,12 +1,13 @@
+import 'package:budget_app/models/payment_hive.dart';
 import 'package:flutter/material.dart';
-import '../models/payment.dart';
 import 'text_field.dart';
 import 'date_picker.dart';
 
 class AddDate extends StatefulWidget {
-  final Payment payment;
+  final PaymentHive payment;
   final Function callback;
-  const AddDate({Key? key, required this.payment, required this.callback}) : super(key: key);
+  const AddDate({Key? key, required this.payment, required this.callback})
+      : super(key: key);
   @override
   _AddDateState createState() => _AddDateState();
 }
@@ -14,7 +15,7 @@ class AddDate extends StatefulWidget {
 class _AddDateState extends State<AddDate> {
   final _formKey = GlobalKey<FormState>();
 
-  late Payment payment;
+  late PaymentHive payment;
   var done = false;
   var dateName = '';
   late DateTime date;

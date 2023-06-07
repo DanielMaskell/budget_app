@@ -37,15 +37,18 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   late DateTime selectedDate;
   String frequency = 'Weekly';
   List<String> frequencies = ['Weekly', 'Fortnightly', 'Monthly'];
-  final DataRepository repository = DataRepository();
+  // final DataRepository repository = DataRepository();
   final PaymentRepository paymentRepository = PaymentRepository();
   TextEditingController? nameController;
   TextEditingController? descriptionController;
   TextEditingController? amountController;
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked =
-        await showDatePicker(context: context, initialDate: selectedDate, firstDate: DateTime(2020, 1), lastDate: DateTime(2030));
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2020, 1),
+        lastDate: DateTime(2030));
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
@@ -56,24 +59,31 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   @override
   void initState() {
     super.initState();
-    selectedDate = widget.payment != null ? widget.payment!.date : DateTime.now();
+    selectedDate =
+        widget.payment != null ? widget.payment!.date : DateTime.now();
     paymentName = widget.payment != null ? widget.payment!.name : '';
     nameController = TextEditingController(text: widget.payment?.name);
-    descriptionController = TextEditingController(text: widget.payment?.description);
-    amountController = TextEditingController(text: widget.payment?.amount.toString());
+    descriptionController =
+        TextEditingController(text: widget.payment?.description);
+    amountController =
+        TextEditingController(text: widget.payment?.amount.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: widget.editing ? const Text('Edit Payment') : const Text('Add Payment'),
+        title: widget.editing
+            ? const Text('Edit Payment')
+            : const Text('Add Payment'),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               TextField(
                 controller: nameController,
                 // autofocus: true,
-                decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a Payment Name'),
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter a Payment Name'),
                 onChanged: (text) => paymentName = text,
               ),
               TextField(
@@ -91,7 +101,8 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                   hintText: '0.00',
                 ),
                 keyboardType: TextInputType.number,
-                onChanged: (String? text) => amount = text != null ? double.parse(text) : 0,
+                onChanged: (String text) =>
+                    amount = text != '' ? double.parse(text) : 0,
               ),
               DropdownButton(
                   value: occurence,
@@ -156,10 +167,13 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       type: type,
                       date: selectedDate,
                       occurence: 'once',
-                      amount: amount != null ? double.parse(amount!.toStringAsFixed(2)) : 0,
+                      amount: amount != null
+                          ? double.parse(amount!.toStringAsFixed(2))
+                          : 0,
                     );
                     if (widget.editing) {
-                      paymentRepository.editPayment(newPayment, widget.id!, widget.payment!);
+                      paymentRepository.editPayment(
+                          newPayment, widget.id!, widget.payment!);
                     } else {
                       paymentRepository.addPayment(newPayment);
                     }

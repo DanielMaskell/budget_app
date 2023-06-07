@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 
 part 'payment_hive.g.dart';
@@ -63,4 +64,29 @@ class PaymentHive extends HiveObject implements Comparable<PaymentHive> {
     string += '},\n';
     return string;
   }
+
+  static PaymentHive _paymentFromJson(Map<String, dynamic> json) {
+    return PaymentHive(
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      type: json['type'] as String,
+      occurence: json['occurence'] as String,
+      date: (json['date'] as Timestamp).toDate(),
+      amount: json['amount'] as double,
+    );
+  }
+
+  Map<String, dynamic> _paymentToJson(PaymentHive instance) =>
+      <String, dynamic>{
+        'name': instance.name,
+        'description': instance.description,
+        'type': instance.type,
+        'date': instance.date,
+        'occurence': instance.occurence,
+        'amount': instance.amount
+      };
+
+  factory PaymentHive.fromJson(Map<String, dynamic> json) =>
+      _paymentFromJson(json);
+  Map<String, dynamic> toJson() => _paymentToJson(this);
 }

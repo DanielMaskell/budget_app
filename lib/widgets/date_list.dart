@@ -1,12 +1,12 @@
+import 'package:budget_app/models/payment_hive.dart';
 import 'package:flutter/material.dart';
-
-import '../models/payment.dart';
 import 'package:intl/intl.dart';
 
 class DateList extends StatelessWidget {
-  final Payment payment;
+  final PaymentHive payment;
   final Widget Function(DateTime) buildRow;
-  const DateList({Key? key, required this.payment, required this.buildRow}) : super(key: key);
+  const DateList({Key? key, required this.payment, required this.buildRow})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

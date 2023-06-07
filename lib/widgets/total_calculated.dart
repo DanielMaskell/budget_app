@@ -1,8 +1,6 @@
 import 'package:budget_app/models/payment_hive.dart';
 import 'package:flutter/material.dart';
 
-import '../models/payment.dart';
-
 class TotalCalculator extends StatefulWidget {
   final List<PaymentHive> payments;
   final double height = 75;
@@ -18,7 +16,7 @@ class TotalCalculator extends StatefulWidget {
 
 class _TotalCalculatorState extends State<TotalCalculator> {
   int? totalAmount;
-  List<Payment>? paymentList;
+  List<PaymentHive>? paymentList;
   late List<int> keys;
   double total = 0;
 
@@ -43,7 +41,8 @@ class _TotalCalculatorState extends State<TotalCalculator> {
             ),
             Text(
               '\$${total.toStringAsFixed(2)}',
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.normal),
+              style:
+                  const TextStyle(fontSize: 30, fontWeight: FontWeight.normal),
             ),
           ],
         ));

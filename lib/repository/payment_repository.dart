@@ -8,13 +8,13 @@ class PaymentRepository {
     // int newId = box.length;
     // payment.id = newId;
 
-    var result = box.get(null, defaultValue: payment);
-
-    if (result == null) {
-      return await box.add(payment);
-    } else {
-      return 0;
-    }
+    // var result = box.get(null, defaultValue: payment);
+    return await box.add(payment);
+    // if (result == null) {
+    //   return await box.add(payment);
+    // } else {
+    //   return 0;
+    // }
   }
 
   void removePayment(PaymentHive payment, int id) {

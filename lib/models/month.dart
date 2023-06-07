@@ -1,10 +1,10 @@
+import 'package:budget_app/models/payment_hive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'payment.dart';
 
 class Month {
   final String name;
   final DateTime date;
-  List<Payment> payments;
+  List<PaymentHive> payments;
   bool? ended;
   String? referenceId;
 
@@ -37,11 +37,11 @@ Map<String, dynamic> _monthToJson(Month instance) => <String, dynamic>{
       'ended': instance.ended
     };
 
-List<Payment> _convertPayments(List<dynamic> paymentMap) {
-  final payments = <Payment>[];
+List<PaymentHive> _convertPayments(List<dynamic> paymentMap) {
+  final payments = <PaymentHive>[];
 
   for (final payment in paymentMap) {
-    payments.add(Payment.fromJson(payment as Map<String, dynamic>));
+    payments.add(PaymentHive.fromJson(payment as Map<String, dynamic>));
   }
   return payments;
 }
