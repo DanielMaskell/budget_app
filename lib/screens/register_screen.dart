@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:budget_app/screens/profile_screen.dart';
 import 'package:budget_app/fire_auth.dart';
@@ -110,11 +109,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                         _isProcessing = true;
                                       });
 
-                                      if (_registerFormKey.currentState!.validate()) {
-                                        User? user = await FireAuth.registerUsingEmailPassword(
+                                      if (_registerFormKey.currentState!
+                                          .validate()) {
+                                        User? user = await FireAuth
+                                            .registerUsingEmailPassword(
                                           name: _nameTextController.text,
                                           email: _emailTextController.text,
-                                          password: _passwordTextController.text,
+                                          password:
+                                              _passwordTextController.text,
                                         );
 
                                         setState(() {
@@ -122,9 +124,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                         });
 
                                         if (user != null) {
-                                          Navigator.of(context).pushAndRemoveUntil(
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
                                             MaterialPageRoute(
-                                              builder: (context) => const ProfilePage(),
+                                              builder: (context) =>
+                                                  const ProfilePage(),
                                             ),
                                             ModalRoute.withName('/'),
                                           );

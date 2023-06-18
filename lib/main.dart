@@ -1,11 +1,9 @@
 import 'package:budget_app/models/payment_hive.dart';
 import 'package:budget_app/screens/add_payment.dart';
-import 'package:budget_app/screens/adduser_screen.dart';
 import 'package:budget_app/screens/csv_screen.dart';
 import 'package:budget_app/screens/graph_screen.dart';
 import 'package:budget_app/screens/login_screen.dart';
 import 'package:budget_app/screens/home_screen.dart';
-import 'package:budget_app/screens/test_screen.dart';
 import 'package:budget_app/screens/profile_screen.dart';
 import 'package:budget_app/screens/stats_screen.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +38,7 @@ void main() async {
     home: const LoginPage(),
     routes: {
       Routes.home: (context) => const HomeScreen(),
-      Routes.second: (context) => const SecondScreen(),
-      Routes.adduser: (context) => AddUser(),
+      // Routes.adduser: (context) => AddUser(),
       Routes.addpet: (context) => const AddPayment(),
       Routes.profile: (context) => const ProfilePage(),
       Routes.login: (context) => const LoginPage(),

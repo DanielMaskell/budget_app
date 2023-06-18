@@ -8,8 +8,10 @@ class PaymentRepository {
     // int newId = box.length;
     // payment.id = newId;
 
-    // var result = box.get(null, defaultValue: payment);
     return await box.add(payment);
+
+    // var result = box.get(null, defaultValue: payment);
+
     // if (result == null) {
     //   return await box.add(payment);
     // } else {

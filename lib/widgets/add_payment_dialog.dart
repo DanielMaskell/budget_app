@@ -1,11 +1,6 @@
 import 'package:budget_app/repository/payment_repository.dart';
-// import 'package:budget_app/widgets/date_picker.dart';
 import 'package:flutter/material.dart';
-// import '../models/date.dart';
-// import '../models/payment.dart';
 import '../models/payment_hive.dart';
-import '../repository/data_repository.dart';
-// import 'package:hive/hive.dart';
 
 class AddPaymentDialog extends StatefulWidget {
   const AddPaymentDialog({
@@ -37,7 +32,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   late DateTime selectedDate;
   String frequency = 'Weekly';
   List<String> frequencies = ['Weekly', 'Fortnightly', 'Monthly'];
-  // final DataRepository repository = DataRepository();
   final PaymentRepository paymentRepository = PaymentRepository();
   TextEditingController? nameController;
   TextEditingController? descriptionController;
