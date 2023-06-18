@@ -55,7 +55,8 @@ class PaymentHive extends HiveObject implements Comparable<PaymentHive> {
     String string = '{\n';
     string += ' id: ' + (id.toString() + ',\n');
     string += ' name: ' + (name + ',\n');
-    string += ' description: ' + (description ?? 'null' + ',\n');
+    string += ' description: ' + (description ?? 'null');
+    string += ',\n';
     string += ' type: ' + (type + ',\n');
     string += ' date: ' + (date.toString() + ',\n');
     string += ' referenceId: ' + (referenceId.toString() + ',\n');

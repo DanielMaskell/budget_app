@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:budget_app/repository/payment_repository.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
@@ -37,7 +37,7 @@ class _CsvPageState extends State<CsvPage> {
           children: [
             ElevatedButton(
               onPressed: () => fileSearch(),
-              child: Text('Add CSV'),
+              child: const Text('Add CSV'),
             ),
             const Spacer(),
             ElevatedButton(
@@ -45,7 +45,7 @@ class _CsvPageState extends State<CsvPage> {
               onPressed: () async {
                 // var box = await Hive.box<PaymentHive>('paymentBoxTest1');
                 var result = await box.clear();
-                print('Trying to clear ${box.name} box: ${result}');
+                print('Trying to clear ${box.name} box: $result');
                 setState(() {});
               },
             ),
@@ -94,10 +94,10 @@ class _CsvPageState extends State<CsvPage> {
 
     return csvTable;*/
 
-    final csvFile = new File(path).openRead();
+    final csvFile = File(path).openRead();
     return await csvFile
         .transform(utf8.decoder)
-        .transform(CsvToListConverter())
+        .transform(const CsvToListConverter())
         .toList();
   }
 

@@ -1,5 +1,5 @@
 import 'package:budget_app/repository/payment_repository.dart';
-import 'package:budget_app/widgets/paymentListCard.dart';
+import 'package:budget_app/widgets/payment_list_card.dart';
 import 'package:budget_app/widgets/total_calculated.dart';
 import 'package:flutter/material.dart';
 import 'add_payment_dialog.dart';
@@ -37,7 +37,8 @@ class _HomeListState extends State<HomeList> {
     'December': 12
   };
 
-  final boldStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+  final boldStyle =
+      const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
   @override
   void initState() {
@@ -123,7 +124,9 @@ class _HomeListState extends State<HomeList> {
             valueListenable: paymentBox.listenable(),
             builder: (context, Box<PaymentHive> payments, _) {
               List<PaymentHive> paymentsList = [];
-              paymentsList = payments.values.where((element) => element.date.month == month).toList();
+              paymentsList = payments.values
+                  .where((element) => element.date.month == month)
+                  .toList();
               paymentsList.sort();
               return Flexible(
                 flex: 4,
@@ -133,7 +136,8 @@ class _HomeListState extends State<HomeList> {
                   ),
                   itemCount: paymentsList.length,
                   itemBuilder: (_, index) {
-                    final PaymentHive? data = paymentsList.isNotEmpty ? paymentsList[index] : null;
+                    final PaymentHive? data =
+                        paymentsList.isNotEmpty ? paymentsList[index] : null;
 
                     return PaymentListCard(
                       payment: data,

@@ -52,11 +52,17 @@ class _ProfilePageState extends State<ProfilePage> {
             _currentUser!.emailVerified
                 ? Text(
                     'Email verified',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.green),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.green),
                   )
                 : Text(
                     'Email not verified',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.red),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.red),
                   ),
             const SizedBox(height: 16.0),
             _isSendingVerification
@@ -80,7 +86,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       IconButton(
                         icon: const Icon(Icons.refresh),
                         onPressed: () async {
-                          User? user = await FireAuth.refreshUser(_currentUser!);
+                          User? user =
+                              await FireAuth.refreshUser(_currentUser!);
 
                           if (user != null) {
                             setState(() {
@@ -98,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
               },
               child: const Text('Delete entries'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
+                backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -124,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     child: const Text('Sign out'),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
+                      backgroundColor: Colors.red,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
