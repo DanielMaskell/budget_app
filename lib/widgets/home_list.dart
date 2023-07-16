@@ -54,7 +54,7 @@ class _HomeListState extends State<HomeList> {
     return _buildHome(context);
   }
 
-  updateMonthData(int newMonth, List<PaymentHive> payments) {
+  updateMonthData(int? newMonth, List<PaymentHive> payments) {
     List<PaymentHive> tempList = [];
     monthData = [];
 
@@ -85,7 +85,7 @@ class _HomeListState extends State<HomeList> {
         monthData.add(item);
       }
     }
-    setState(() {});
+    // setState(() {});
   }
 
   removePaymentCallback(PaymentHive payment, int id) {
@@ -110,6 +110,7 @@ class _HomeListState extends State<HomeList> {
   Widget _buildHome(BuildContext context) {
     return BlocBuilder<PaymentCubit, PaymentState>(builder: (context, state) {
       // updateMonthData(month, state.payments);
+      updateMonthData(null, state.payments);
       return Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,10 +131,10 @@ class _HomeListState extends State<HomeList> {
                     .values
                     .toList(),
                 onChanged: ((value) {
+                  updateMonthData(value as int, state.payments);
                   setState(() {
                     month = value as int;
                   });
-                  updateMonthData(value as int, state.payments);
                 }),
               ),
             ),
@@ -151,7 +152,10 @@ class _HomeListState extends State<HomeList> {
                 //     title: Text(state.payments[index].name),
                 //   );
                 // },
-                children: state.payments
+                // children: state.payments
+                //     .map((e) => ListTile(title: Text(e.name)))
+                //     .toList(),
+                children: monthData
                     .map((e) => ListTile(title: Text(e.name)))
                     .toList(),
                 shrinkWrap: true,
