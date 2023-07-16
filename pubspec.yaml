@@ -22,6 +22,8 @@ dependencies:
   hive_flutter: 1.1.0
   syncfusion_flutter_charts: 20.4.38
   permission_handler: ^10.2.0
+  flutter_bloc: ^8.1.3
+  equatable: ^2.0.5
   # pdf_text: 0.5.0
 
 dev_dependencies:

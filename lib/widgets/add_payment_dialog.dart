@@ -32,7 +32,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   late DateTime selectedDate;
   String frequency = 'Weekly';
   List<String> frequencies = ['Weekly', 'Fortnightly', 'Monthly'];
-  final PaymentRepository paymentRepository = PaymentRepository();
+  // final PaymentRepository paymentRepository = PaymentRepository();
   TextEditingController? nameController;
   TextEditingController? descriptionController;
   TextEditingController? amountController;
@@ -166,10 +166,10 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                           : 0,
                     );
                     if (widget.editing) {
-                      paymentRepository.editPayment(
-                          newPayment, widget.id!, widget.payment!);
+                      // paymentRepository.editPayment(
+                      // newPayment, widget.id!, widget.payment!);
                     } else {
-                      paymentRepository.addPayment(newPayment);
+                      // paymentRepository.addPayment(newPayment);
                     }
 
                     widget.addPaymentCallback();

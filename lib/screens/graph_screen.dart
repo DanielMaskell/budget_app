@@ -20,8 +20,8 @@ class GraphScreen extends StatefulWidget {
 class _GraphScreen extends State<GraphScreen> {
   List<BudgetData> tempList = [];
   List<BudgetData> monthData = [];
-  final PaymentRepository paymentRepository = PaymentRepository();
-  late final Map<dynamic, PaymentHive> payments = paymentRepository.getBox();
+  // final PaymentRepository paymentRepository = PaymentRepository();
+  // late final Map<dynamic, PaymentHive> payments = paymentRepository.getBox();
   late Box<PaymentHive> paymentBox;
   int month = 1;
   final Map<String, int> months = {
@@ -52,8 +52,11 @@ class _GraphScreen extends State<GraphScreen> {
     monthData = [];
 
     paymentBox.toMap().forEach((key, value) {
-      DateTime tempDate = DateTime(value.date.year, value.date.month, value.date.day);
-      BudgetData tempItem = BudgetData(DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!, value.amount);
+      DateTime tempDate =
+          DateTime(value.date.year, value.date.month, value.date.day);
+      BudgetData tempItem = BudgetData(
+          DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!,
+          value.amount);
       tempList.add(tempItem);
     });
     tempList.sort(((a, b) => b.compareTo(a)));
@@ -61,8 +64,11 @@ class _GraphScreen extends State<GraphScreen> {
     for (BudgetData item in tempList) {
       if (item.date.month == month) {
         total = total + item.amount;
-        DateTime tempDate = DateTime(item.date.year, item.date.month, item.date.day);
-        BudgetData tempItem = BudgetData(DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!, total);
+        DateTime tempDate =
+            DateTime(item.date.year, item.date.month, item.date.day);
+        BudgetData tempItem = BudgetData(
+            DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!,
+            total);
         monthData.add(tempItem);
       }
     }
@@ -107,7 +113,8 @@ class _GraphScreen extends State<GraphScreen> {
             series: <ChartSeries<BudgetData, String>>[
               LineSeries<BudgetData, String>(
                 dataSource: monthData,
-                xValueMapper: (BudgetData sales, _) => sales.date.day.toString(),
+                xValueMapper: (BudgetData sales, _) =>
+                    sales.date.day.toString(),
                 yValueMapper: (BudgetData sales, _) => sales.amount,
                 name: 'Expenses',
                 dataLabelSettings: const DataLabelSettings(isVisible: true),

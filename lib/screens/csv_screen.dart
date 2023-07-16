@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:budget_app/bloc/payment_cubit.dart';
 import 'package:budget_app/repository/payment_repository.dart';
+import 'package:budget_app/repository/service/payment_service.dart';
 // import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:budget_app/widgets/drawer.dart';
 import 'package:budget_app/models/payment_hive.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -22,7 +25,8 @@ class CsvPage extends StatefulWidget {
 class _CsvPageState extends State<CsvPage> {
   // Directory appDocDir = await getApplicationDocumentsDirectory();
   //   String appDocPath = appDocDir.path;
-  final PaymentRepository paymentRepository = PaymentRepository();
+  final PaymentRepository paymentRepository =
+      PaymentRepository(service: PaymentService());
   Box<PaymentHive> box = Hive.box<PaymentHive>('paymentBoxTest');
 
   @override
@@ -45,6 +49,7 @@ class _CsvPageState extends State<CsvPage> {
               onPressed: () async {
                 // var box = await Hive.box<PaymentHive>('paymentBoxTest1');
                 var result = await box.clear();
+                context.read<PaymentCubit>().getPayments();
                 print('Trying to clear ${box.name} box: $result');
                 setState(() {});
               },
@@ -146,8 +151,12 @@ class _CsvPageState extends State<CsvPage> {
           // print('newPayment: ${newPayment.toString()}');
 
           var addingResult = await paymentRepository.addPayment(newPayment);
-          print(
-              'Adding payment ${newPayment.referenceId} success: ${addingResult.toInt()}');
+          // print(
+          //     'Adding payment ${newPayment.referenceId} success: ${addingResult.toInt()}');
+
+          // var addingResult = await paymentRepository.addPaymentOld(newPayment);
+          // print(
+          //     'Adding payment ${newPayment.referenceId} success: ${addingResult.toInt()}');
           setState(() {});
         } catch (e) {
           print('error adding payment: ${e.toString()}');
