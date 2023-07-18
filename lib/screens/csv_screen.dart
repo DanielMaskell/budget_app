@@ -146,16 +146,9 @@ class _CsvPageState extends State<CsvPage> {
             amount: d[6],
             referenceId: d[1],
           );
-          // print('newPayment: ${newPayment.toString()}');
 
           var addingResult = await paymentRepository.addPayment(newPayment);
           context.read<PaymentCubit>().getPayments();
-          // print(
-          //     'Adding payment ${newPayment.referenceId} success: ${addingResult.toInt()}');
-
-          // var addingResult = await paymentRepository.addPaymentOld(newPayment);
-          // print(
-          //     'Adding payment ${newPayment.referenceId} success: ${addingResult.toInt()}');
           setState(() {});
         } catch (e) {
           print('error adding payment: ${e.toString()}');
