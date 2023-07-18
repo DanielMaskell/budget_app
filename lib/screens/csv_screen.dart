@@ -25,9 +25,8 @@ class CsvPage extends StatefulWidget {
 class _CsvPageState extends State<CsvPage> {
   // Directory appDocDir = await getApplicationDocumentsDirectory();
   //   String appDocPath = appDocDir.path;
-  final PaymentRepository paymentRepository =
-      PaymentRepository(service: PaymentService());
-  Box<PaymentHive> box = Hive.box<PaymentHive>('paymentBoxTest');
+  final PaymentRepository paymentRepository = PaymentRepository(service: PaymentService());
+  // Box<PaymentHive> box = Hive.box<PaymentHive>('paymentBoxTest');
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +44,14 @@ class _CsvPageState extends State<CsvPage> {
             ),
             const Spacer(),
             ElevatedButton(
-              child: Text('Clear Box: ${box.length.toString()}'),
+              child: const Text('Clear Box'),
               onPressed: () async {
                 // var box = await Hive.box<PaymentHive>('paymentBoxTest1');
-                var result = await box.clear();
+                // var result = await box.clear();
+                var result = paymentRepository.clearPayments();
+                print('Clearning box: $result');
                 context.read<PaymentCubit>().getPayments();
-                print('Trying to clear ${box.name} box: $result');
+                // print('Trying to clear ${box.name} box: $result');
                 setState(() {});
               },
             ),
@@ -100,10 +101,7 @@ class _CsvPageState extends State<CsvPage> {
     return csvTable;*/
 
     final csvFile = File(path).openRead();
-    return await csvFile
-        .transform(utf8.decoder)
-        .transform(const CsvToListConverter())
-        .toList();
+    return await csvFile.transform(utf8.decoder).transform(const CsvToListConverter()).toList();
   }
 
   void fileSearch() async {
@@ -151,6 +149,7 @@ class _CsvPageState extends State<CsvPage> {
           // print('newPayment: ${newPayment.toString()}');
 
           var addingResult = await paymentRepository.addPayment(newPayment);
+          context.read<PaymentCubit>().getPayments();
           // print(
           //     'Adding payment ${newPayment.referenceId} success: ${addingResult.toInt()}');
 

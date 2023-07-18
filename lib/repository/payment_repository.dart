@@ -9,11 +9,9 @@ class PaymentRepository {
   final PaymentService service;
   final Box<PaymentHive> box = Hive.box<PaymentHive>('PaymentBoxTest');
 
-  Future<int> addPayment(PaymentHive payment) async =>
-      service.addPayment(payment);
+  Future<int> addPayment(PaymentHive payment) async => service.addPayment(payment);
 
-  Future<void> removePayment(PaymentHive payment, int id) async =>
-      service.removePayment(payment, id);
+  Future<void> removePayment(PaymentHive payment, int id) async => service.removePayment(payment, id);
 
   Future<List<PaymentHive>> getPayments() async => service.getPayments();
 
@@ -31,6 +29,8 @@ class PaymentRepository {
       return 0;
     }
   }
+
+  Future<int> clearPayments() async => service.clearPayments();
 
   // void removePayment(PaymentHive payment, int id) {
   //   try {

@@ -19,9 +19,6 @@ class HomeList extends StatefulWidget {
 
 class _HomeListState extends State<HomeList> {
   List<PaymentHive> monthData = [];
-  // final PaymentRepository paymentRepository = PaymentRepository();
-  // late final Map<dynamic, PaymentHive> payments = paymentRepository.getBox();
-  // late Box<PaymentHive> paymentBox;
   GlobalKey totalCalculatorKey = GlobalKey();
   int month = 3;
   final Map<String, int> months = {
@@ -45,8 +42,6 @@ class _HomeListState extends State<HomeList> {
   @override
   void initState() {
     super.initState();
-    // paymentBox = Hive.box<PaymentHive>('paymentBoxTest');
-    // updateMonthData(month);
   }
 
   @override
@@ -58,16 +53,6 @@ class _HomeListState extends State<HomeList> {
     List<PaymentHive> tempList = [];
     monthData = [];
 
-    // paymentBox.toMap().forEach((key, value) {
-    //   PaymentHive tempItem = PaymentHive(
-    //     name: value.name,
-    //     type: value.type,
-    //     date: value.date,
-    //     occurence: value.occurence,
-    //     amount: value.amount,
-    //   );
-    //   tempList.add(tempItem);
-    // });
     for (PaymentHive p in payments) {
       PaymentHive tempItem = PaymentHive(
         name: p.name,
@@ -85,7 +70,6 @@ class _HomeListState extends State<HomeList> {
         monthData.add(item);
       }
     }
-    // setState(() {});
   }
 
   removePaymentCallback(PaymentHive payment, int id) {
@@ -109,7 +93,6 @@ class _HomeListState extends State<HomeList> {
 
   Widget _buildHome(BuildContext context) {
     return BlocBuilder<PaymentCubit, PaymentState>(builder: (context, state) {
-      // updateMonthData(month, state.payments);
       updateMonthData(null, state.payments);
       return Scaffold(
         body: Column(
@@ -122,102 +105,40 @@ class _HomeListState extends State<HomeList> {
                 items: months
                     .map((name, value) {
                       return MapEntry(
-                          name,
-                          DropdownMenuItem<int>(
-                            value: value,
-                            child: Text(name),
-                          ));
+                        name,
+                        DropdownMenuItem<int>(
+                          value: value,
+                          child: Text(name),
+                        ),
+                      );
                     })
                     .values
                     .toList(),
                 onChanged: ((value) {
                   updateMonthData(value as int, state.payments);
                   setState(() {
-                    month = value as int;
+                    month = value;
                   });
                 }),
               ),
             ),
-
-            // SingleChildScrollView(
-            //   child: Column(
             Expanded(
               flex: 10,
               child: ListView(
                 padding: const EdgeInsets.all(4),
-                // itemCount: state.payments.length,
-                // sepakratorBuilder: (_, __) => const Divider(),
-                // itemBuilder: (context, int index) {
-                //   return ListTile(
-                //     title: Text(state.payments[index].name),
-                //   );
-                // },
-                // children: state.payments
-                //     .map((e) => ListTile(title: Text(e.name)))
-                //     .toList(),
                 children: monthData
                     .map((e) => ListTile(title: Text(e.name)))
                     .toList(),
                 shrinkWrap: true,
               ),
             ),
-            // SizedBox(
-            //   height: 500,
-            //   child: ListView(
-            //     padding: const EdgeInsets.all(4),
-            //     // itemCount: state.payments.length,
-            //     // sepakratorBuilder: (_, __) => const Divider(),
-            //     // itemBuilder: (context, int index) {
-            //     //   return ListTile(
-            //     //     title: Text(state.payments[index].name),
-            //     //   );
-            //     // },
-            //     children: state.payments
-            //         .map((e) => ListTile(title: Text(e.name)))
-            //         .toList(),
-            //     shrinkWrap: true,
-            //   ),
-            // ),
-
-            // ),
-
-            // ValueListenableBuilder(
-            //   // valueListenable: paymentBox.listenable(),
-            //   valueListenable: state.payments.listenable(),
-            //   builder: (context, Box<PaymentHive> payments, _) {
-            //     List<PaymentHive> paymentsList = [];
-            //     paymentsList = payments.values
-            //         .where((element) => element.date.month == month)
-            //         .toList();
-            //     paymentsList.sort();
-            //     return Flexible(
-            //       flex: 4,
-            //       child: ListView.separated(
-            //         separatorBuilder: (_, index) => const Divider(
-            //           height: 10.0,
-            //         ),
-            //         itemCount: paymentsList.length,
-            //         itemBuilder: (_, index) {
-            //           final PaymentHive? data =
-            //               paymentsList.isNotEmpty ? paymentsList[index] : null;
-
-            //           return PaymentListCard(
-            //             payment: data,
-            //             removePaymentCallback: removePaymentCallback,
-            //             id: index,
-            //             editPaymentCallback: editPaymentCallback,
-            //           );
-            //         },
-            //       ),
-            //     );
-            //   },
-            // ),
             Expanded(
-                flex: 1,
-                child: TotalCalculator(
-                  key: totalCalculatorKey,
-                  payments: monthData,
-                ))
+              flex: 1,
+              child: TotalCalculator(
+                key: totalCalculatorKey,
+                payments: monthData,
+              ),
+            ),
           ],
         ),
         floatingActionButton: FloatingActionButton(

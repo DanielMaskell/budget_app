@@ -35,6 +35,13 @@ class PaymentService {
     box.put(oldPayment.key, payment);
   }
 
+  Future<int> clearPayments() async {
+    var result = await box.clear();
+    print('Clearing box: $result');
+
+    return result;
+  }
+
   Future<List<PaymentHive>> getPayments() async {
     print('Getting payments');
     List<PaymentHive> payments = [];

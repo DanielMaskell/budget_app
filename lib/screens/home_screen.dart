@@ -47,7 +47,7 @@ class _HomeScreenState extends State {
     //     ));
 
     // context.read<PaymentCubit>().getPayments();
-    openBox();
+    // openBox();
   }
 
   @override
@@ -55,9 +55,9 @@ class _HomeScreenState extends State {
     super.dispose();
   }
 
-  void openBox() async {
-    box = Hive.box<PaymentHive>('paymentBoxTest');
-  }
+  // void openBox() async {
+  //   box = Hive.box<PaymentHive>('paymentBoxTest');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +71,7 @@ class _HomeScreenState extends State {
         builder: (context, state) {
           return Center(
             // child: Text('Box Length: ' + box.length.toString()),
-            child: Text(
-                'Payments: ${state.payments?.length.toString() ?? 'No payments'}'),
+            child: Text('Payments: ${state.payments?.length.toString() ?? 'No payments'}'),
           );
         },
       ),

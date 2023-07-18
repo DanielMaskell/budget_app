@@ -22,7 +22,7 @@ class _GraphScreen extends State<GraphScreen> {
   List<BudgetData> monthData = [];
   // final PaymentRepository paymentRepository = PaymentRepository();
   // late final Map<dynamic, PaymentHive> payments = paymentRepository.getBox();
-  late Box<PaymentHive> paymentBox;
+  // late Box<PaymentHive> paymentBox;
   int month = 1;
   final Map<String, int> months = {
     'January': 1,
@@ -36,13 +36,13 @@ class _GraphScreen extends State<GraphScreen> {
     'September': 9,
     'October': 10,
     'November': 11,
-    'December': 12
+    'December': 12,
   };
 
   @override
   void initState() {
     super.initState();
-    paymentBox = Hive.box<PaymentHive>('paymentBoxTest');
+    // paymentBox = Hive.box<PaymentHive>('paymentBoxTest');
     updateMonthData(month);
   }
 
@@ -51,24 +51,21 @@ class _GraphScreen extends State<GraphScreen> {
     double total = 0;
     monthData = [];
 
-    paymentBox.toMap().forEach((key, value) {
-      DateTime tempDate =
-          DateTime(value.date.year, value.date.month, value.date.day);
-      BudgetData tempItem = BudgetData(
-          DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!,
-          value.amount);
-      tempList.add(tempItem);
-    });
+    // paymentBox.toMap().forEach((key, value) {
+    //   DateTime tempDate =
+    //       DateTime(value.date.year, value.date.month, value.date.day);
+    //   BudgetData tempItem = BudgetData(
+    //       DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!,
+    //       value.amount);
+    //   tempList.add(tempItem);
+    // });
     tempList.sort(((a, b) => b.compareTo(a)));
 
     for (BudgetData item in tempList) {
       if (item.date.month == month) {
         total = total + item.amount;
-        DateTime tempDate =
-            DateTime(item.date.year, item.date.month, item.date.day);
-        BudgetData tempItem = BudgetData(
-            DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!,
-            total);
+        DateTime tempDate = DateTime(item.date.year, item.date.month, item.date.day);
+        BudgetData tempItem = BudgetData(DateTime.tryParse(DateFormat('yyyy-MM-dd').format(tempDate))!, total);
         monthData.add(tempItem);
       }
     }
@@ -113,8 +110,7 @@ class _GraphScreen extends State<GraphScreen> {
             series: <ChartSeries<BudgetData, String>>[
               LineSeries<BudgetData, String>(
                 dataSource: monthData,
-                xValueMapper: (BudgetData sales, _) =>
-                    sales.date.day.toString(),
+                xValueMapper: (BudgetData sales, _) => sales.date.day.toString(),
                 yValueMapper: (BudgetData sales, _) => sales.amount,
                 name: 'Expenses',
                 dataLabelSettings: const DataLabelSettings(isVisible: true),
