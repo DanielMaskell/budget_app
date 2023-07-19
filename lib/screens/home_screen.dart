@@ -1,6 +1,4 @@
 import 'package:budget_app/bloc/payment_cubit.dart';
-import 'package:budget_app/repository/payment_repository.dart';
-import 'package:budget_app/repository/service/payment_service.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,36 +26,12 @@ class _HomeScreenState extends State {
   void initState() {
     super.initState();
     context.read<PaymentCubit>().getPayments();
-    // MultiBlocProvider(
-    //     providers: [
-    //       BlocProvider<PaymentCubit>(
-    //         create: (context) => PaymentCubit(
-    //           paymentRepository: context.read<PaymentRepository>(),
-    //         ),
-    //       ),
-    //     ],
-    //     child: BlocBuilder<PaymentCubit, PaymentState>(
-    //       builder: (context, state) {
-    //         return Center(
-    //           // child: Text('Box Length: ' + box.length.toString()),
-    //           child: Text(
-    //               'Payments: ${state.payments?.length.toString() ?? 'No payments'}'),
-    //         );
-    //       },
-    //     ));
-
-    // context.read<PaymentCubit>().getPayments();
-    // openBox();
   }
 
   @override
   void dispose() {
     super.dispose();
   }
-
-  // void openBox() async {
-  //   box = Hive.box<PaymentHive>('paymentBoxTest');
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -66,39 +40,13 @@ class _HomeScreenState extends State {
         title: const Text('Home Screen'),
       ),
       drawer: const SafeArea(child: AppDrawer()),
-      // body: const Text('Hello')
       body: BlocBuilder<PaymentCubit, PaymentState>(
         builder: (context, state) {
           return Center(
-            // child: Text('Box Length: ' + box.length.toString()),
             child: Text('Payments: ${state.payments?.length.toString() ?? 'No payments'}'),
           );
         },
       ),
-
-      // body: RepositoryProvider(
-      //   create: (context) => PaymentRepository(service: PaymentService()),
-      //   child: MultiBlocProvider(
-      //       providers: [
-      //         BlocProvider<PaymentCubit>(
-      //           create: (context) => PaymentCubit(
-      //             paymentRepository: context.read<PaymentRepository>(),
-      //           ),
-      //         ),
-      //       ],
-      //       child: BlocBuilder<PaymentCubit, PaymentState>(
-      //         builder: (context, state) {
-      //           return Center(
-      //             // child: Text('Box Length: ' + box.length.toString()),
-      //             child: Text(
-      //                 'Payments: ${state.payments?.length.toString() ?? 'No payments'}'),
-      //           );
-      //         },
-      //       )),
-      // )
-      // body: Center(
-      //   child: Text('Box Length: ' + box.length.toString()),
-      // ),
     );
   }
 

@@ -73,7 +73,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             children: <Widget>[
               TextField(
                 controller: nameController,
-                // autofocus: true,
                 decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a Payment Name'),
                 onChanged: (text) => paymentName = text,
               ),

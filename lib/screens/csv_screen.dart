@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:budget_app/bloc/payment_cubit.dart';
 import 'package:budget_app/repository/payment_repository.dart';
 import 'package:budget_app/repository/service/payment_service.dart';
-// import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
@@ -23,10 +22,7 @@ class CsvPage extends StatefulWidget {
 }
 
 class _CsvPageState extends State<CsvPage> {
-  // Directory appDocDir = await getApplicationDocumentsDirectory();
-  //   String appDocPath = appDocDir.path;
   final PaymentRepository paymentRepository = PaymentRepository(service: PaymentService());
-  // Box<PaymentHive> box = Hive.box<PaymentHive>('paymentBoxTest');
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +42,9 @@ class _CsvPageState extends State<CsvPage> {
             ElevatedButton(
               child: const Text('Clear Box'),
               onPressed: () async {
-                // var box = await Hive.box<PaymentHive>('paymentBoxTest1');
-                // var result = await box.clear();
                 var result = paymentRepository.clearPayments();
                 print('Clearning box: $result');
                 context.read<PaymentCubit>().getPayments();
-                // print('Trying to clear ${box.name} box: $result');
                 setState(() {});
               },
             ),
@@ -59,61 +52,18 @@ class _CsvPageState extends State<CsvPage> {
         ),
       ),
     );
-    /*body: FutureBuilder(
-            future: loadingCsvData('test_app/assets/test.csv'),
-            builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-              print(snapshot.data.toString());
-              return snapshot.hasData
-                  ? Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: snapshot.data!
-                            .map((data) => Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
-                                  child: Row(
-                                    children: <Widget>[Text(data[0].toString()), Text(data[1].toString())],
-                                  ),
-                                ))
-                            .toList(),
-                      ))
-                  : const Center(
-                      child: CircularProgressIndicator(),
-                    );
-            }));*/
   }
 
   Future<List<List<dynamic>>> loadingCsvData(String path) async {
-    // final csvFile = File(path).openRead();
-
-    // return await csvFile
-    //     .transform(utf8.decoder)
-    //     .transform(
-    //       const CsvToListConverter(),
-    //     )
-    //     .toList();
-
-    /* working with test
-    final csvFile = await rootBundle.loadString('assets/test.csv');
-    List<List<dynamic>> csvTable = const CsvToListConverter().convert(csvFile);
-
-    print("csvTable: $csvTable");
-
-    return csvTable;*/
-
     final csvFile = File(path).openRead();
     return await csvFile.transform(utf8.decoder).transform(const CsvToListConverter()).toList();
   }
 
   void fileSearch() async {
-    // var status = await Permission.storage.
     if (await Permission.storage.isPermanentlyDenied) {
-      // The user opted to never again see the permission request dialog for this
-      // app. The only way to change the permission's status now is to let the
-      // user manually enable it in the system settings.
       openAppSettings();
     }
-    // requestPermission(Permission.storage);
-    print('---- permission status: ${Permission.storage.isGranted.toString()}');
+
     if (await requestPermission(Permission.storage)) {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -136,7 +86,6 @@ class _CsvPageState extends State<CsvPage> {
       if (d.length == 7 && counter > 7) {
         try {
           String newDate = d[0].toString().replaceAll('/', '-');
-          // print('newDate: $newDate');
           print('d: ${d.toString()}');
           PaymentHive newPayment = PaymentHive(
             name: d[4],
