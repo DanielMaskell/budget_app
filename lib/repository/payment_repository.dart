@@ -11,7 +11,7 @@ class PaymentRepository {
 
   Future<int> addPayment(PaymentHive payment) async => service.addPayment(payment);
 
-  Future<void> removePayment(PaymentHive payment, int id) async => service.removePayment(payment, id);
+  Future<void> removePayment(PaymentHive payment) async => service.removePayment(payment);
 
   Future<List<PaymentHive>> getPayments() async => service.getPayments();
 

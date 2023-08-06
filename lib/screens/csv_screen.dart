@@ -65,7 +65,10 @@ class _CsvPageState extends State<CsvPage> {
     }
 
     if (await requestPermission(Permission.storage)) {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+          // type: FileType.custom,
+          // allowedExtensions: ['csv'],
+          );
 
       if (result != null) {
         File file = File(result.files.single.path!);
@@ -97,13 +100,15 @@ class _CsvPageState extends State<CsvPage> {
           );
 
           var addingResult = await paymentRepository.addPayment(newPayment);
-          context.read<PaymentCubit>().getPayments();
+          // context.read<PaymentCubit>().getPayments();
           setState(() {});
         } catch (e) {
           print('error adding payment: ${e.toString()}');
         }
       }
     }
+
+    context.read<PaymentCubit>().getPayments();
   }
 
   Future<bool> requestPermission(Permission permission) async {

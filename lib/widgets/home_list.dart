@@ -1,6 +1,8 @@
 import 'package:budget_app/bloc/payment_cubit.dart';
 import 'package:budget_app/repository/payment_repository.dart';
+import 'package:budget_app/repository/service/payment_service.dart';
 import 'package:budget_app/widgets/payment_list_card.dart';
+import 'package:budget_app/widgets/payment_tile.dart';
 import 'package:budget_app/widgets/total_calculated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,23 +23,10 @@ class _HomeListState extends State<HomeList> {
   List<PaymentHive> monthData = [];
   GlobalKey totalCalculatorKey = GlobalKey();
   int month = 3;
-  final Map<String, int> months = {
-    'January': 1,
-    'February': 2,
-    'March': 3,
-    'April': 4,
-    'May': 5,
-    'June': 6,
-    'July': 7,
-    'August': 8,
-    'September': 9,
-    'October': 10,
-    'November': 11,
-    'December': 12
-  };
+  final PaymentRepository paymentRepository = PaymentRepository(service: PaymentService());
+  final Map<String, int> months = {'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12};
 
-  final boldStyle =
-      const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+  final boldStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
   @override
   void initState() {
@@ -54,14 +43,16 @@ class _HomeListState extends State<HomeList> {
     monthData = [];
 
     for (PaymentHive p in payments) {
-      PaymentHive tempItem = PaymentHive(
-        name: p.name,
-        type: p.type,
-        date: p.date,
-        occurence: p.occurence,
-        amount: p.amount,
-      );
-      tempList.add(tempItem);
+      // PaymentHive tempItem = PaymentHive(
+      //   id: p.id,
+      //   name: p.name,
+      //   type: p.type,
+      //   date: p.date,
+      //   occurence: p.occurence,
+      //   amount: p.amount,
+      // );
+
+      tempList.add(p);
     }
     tempList.sort(((a, b) => b.compareTo(a)));
 
@@ -72,8 +63,10 @@ class _HomeListState extends State<HomeList> {
     }
   }
 
-  removePaymentCallback(PaymentHive payment, int id) {
-    // paymentRepository.removePayment(payment, id);
+  removePaymentCallback(PaymentHive payment) async {
+    await paymentRepository.removePayment(payment);
+    context.read<PaymentCubit>().getPayments();
+    setState(() {});
     // updateMonthData(month);
   }
 
@@ -126,9 +119,22 @@ class _HomeListState extends State<HomeList> {
               flex: 10,
               child: ListView(
                 padding: const EdgeInsets.all(4),
-                children: monthData
-                    .map((e) => ListTile(title: Text(e.name)))
-                    .toList(),
+                children: monthData.isNotEmpty
+                    ? monthData
+                        // .map((e) => ListTile(title: Text(e.name)))
+                        // .map((p) => ListTile(title: Text(p.name)))
+                        /*.map((p) => PaymentTile(
+                          payment: p,
+                        ))
+                    .toList(),*/
+                        .map((p) => PaymentListCard(
+                              // id: p.id,
+                              payment: p,
+                              removePaymentCallback: removePaymentCallback,
+                              editPaymentCallback: editPaymentCallback,
+                            ))
+                        .toList()
+                    : [],
                 shrinkWrap: true,
               ),
             ),

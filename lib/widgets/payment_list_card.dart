@@ -1,25 +1,28 @@
 import 'package:budget_app/models/payment_hive.dart';
+import 'package:budget_app/repository/payment_repository.dart';
+import 'package:budget_app/repository/service/payment_service.dart';
 import 'package:flutter/material.dart';
 
 class PaymentListCard extends StatelessWidget {
   final PaymentHive? payment;
   final void Function({PaymentHive? payment, int? id}) editPaymentCallback;
-  final void Function(PaymentHive payment, int id) removePaymentCallback;
-  final int id;
+  final void Function(PaymentHive payment) removePaymentCallback;
+  // final int id;
+  final PaymentRepository paymentRepository = PaymentRepository(service: PaymentService());
 
-  const PaymentListCard({
+  PaymentListCard({
     Key? key,
     required this.payment,
     required this.removePaymentCallback,
-    required this.id,
+    // required this.id,
     required this.editPaymentCallback,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       color: Colors.grey,
       child: payment != null
           ? Row(
@@ -39,14 +42,14 @@ class PaymentListCard extends StatelessWidget {
                     PopupMenuItem<String>(
                       child: const Text('Remove'),
                       onTap: () {
-                        removePaymentCallback(payment!, id);
+                        removePaymentCallback(payment!);
                       },
                     ),
                     PopupMenuItem<String>(
                       child: const Text('Edit'),
                       onTap: () {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
-                          editPaymentCallback(payment: payment, id: id);
+                          editPaymentCallback(payment: payment);
                         });
                       },
                     ),

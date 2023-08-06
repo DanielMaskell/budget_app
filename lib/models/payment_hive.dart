@@ -77,8 +77,8 @@ class PaymentHive extends HiveObject implements Comparable<PaymentHive> {
     );
   }
 
-  Map<String, dynamic> _paymentToJson(PaymentHive instance) =>
-      <String, dynamic>{
+  Map<String, dynamic> _paymentToJson(PaymentHive instance) => <String, dynamic>{
+        'id': instance.id,
         'name': instance.name,
         'description': instance.description,
         'type': instance.type,
@@ -87,7 +87,6 @@ class PaymentHive extends HiveObject implements Comparable<PaymentHive> {
         'amount': instance.amount
       };
 
-  factory PaymentHive.fromJson(Map<String, dynamic> json) =>
-      _paymentFromJson(json);
+  factory PaymentHive.fromJson(Map<String, dynamic> json) => _paymentFromJson(json);
   Map<String, dynamic> toJson() => _paymentToJson(this);
 }

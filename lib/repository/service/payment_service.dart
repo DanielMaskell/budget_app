@@ -7,12 +7,16 @@ class PaymentService {
   final Box<PaymentHive> box = Hive.box<PaymentHive>('PaymentBoxTest');
 
   Future<int> addPayment(PaymentHive payment) async {
+    // payment.id = box.length;
+    print('adding paymnet id: ${payment.id}');
     return await box.add(payment);
   }
 
-  void removePayment(PaymentHive payment, int id) {
+  void removePayment(PaymentHive payment) async {
     try {
-      box.delete(payment.key);
+      box.delete(payment.id);
+      // box.deleteAt(index)
+      // print('removePayment: ${result.toString()}');
     } catch (e) {
       print('Error deleting payment: ${e.toString()}');
     }
@@ -38,13 +42,16 @@ class PaymentService {
 
     box.toMap().forEach(
       (key, value) {
+        print('item value: ${key} ${value.name}');
         PaymentHive tempItem = PaymentHive(
+          id: key,
           name: value.name,
           type: value.type,
           date: value.date,
           occurence: value.occurence,
           amount: value.amount,
         );
+        print('tempItem id: ${tempItem.id}');
         payments.add(tempItem);
       },
     );
