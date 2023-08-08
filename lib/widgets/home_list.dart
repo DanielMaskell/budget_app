@@ -2,13 +2,11 @@ import 'package:budget_app/bloc/payment_cubit.dart';
 import 'package:budget_app/repository/payment_repository.dart';
 import 'package:budget_app/repository/service/payment_service.dart';
 import 'package:budget_app/widgets/payment_list_card.dart';
-import 'package:budget_app/widgets/payment_tile.dart';
 import 'package:budget_app/widgets/total_calculated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'add_payment_dialog.dart';
 import '../models/payment_hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeList extends StatefulWidget {
   const HomeList({Key? key, required this.homeListCallback}) : super(key: key);
@@ -43,15 +41,6 @@ class _HomeListState extends State<HomeList> {
     monthData = [];
 
     for (PaymentHive p in payments) {
-      // PaymentHive tempItem = PaymentHive(
-      //   id: p.id,
-      //   name: p.name,
-      //   type: p.type,
-      //   date: p.date,
-      //   occurence: p.occurence,
-      //   amount: p.amount,
-      // );
-
       tempList.add(p);
     }
     tempList.sort(((a, b) => b.compareTo(a)));
@@ -67,7 +56,6 @@ class _HomeListState extends State<HomeList> {
     await paymentRepository.removePayment(payment);
     context.read<PaymentCubit>().getPayments();
     setState(() {});
-    // updateMonthData(month);
   }
 
   void editPaymentCallback({PaymentHive? payment, int? id}) {

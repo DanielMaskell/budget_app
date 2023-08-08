@@ -151,6 +151,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                 try {
                   if (paymentName != null) {
                     final newPayment = PaymentHive(
+                      id: widget.payment?.id,
                       name: paymentName!,
                       description: paymentDescription,
                       type: type,
@@ -159,15 +160,16 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       amount: amount != null ? double.parse(amount!.toStringAsFixed(2)) : 0,
                     );
                     if (widget.editing) {
-                      // paymentRepository.editPayment(
-                      // newPayment, widget.id!, widget.payment!);
+                      paymentRepository.editPayment(newPayment, widget.payment!);
+                      context.read<PaymentCubit>().getPayments();
                     } else {
                       await paymentRepository.addPayment(newPayment);
                       context.read<PaymentCubit>().getPayments();
                     }
 
-                    widget.addPaymentCallback();
+                    // widget.addPaymentCallback();
                     Navigator.of(context).pop();
+                    setState(() {});
                   } else {
                     print('Payment name is null');
                   }

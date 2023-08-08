@@ -22,10 +22,10 @@ class PaymentService {
     }
   }
 
-  void editPayment(PaymentHive payment, int id, PaymentHive oldPayment) {
-    print('Edit payment called: paymentId: ${payment.key}');
+  void editPayment(PaymentHive payment, PaymentHive oldPayment) {
+    print('Edit payment called: paymentId: ${oldPayment.key}');
 
-    box.put(oldPayment.key, payment);
+    box.put(oldPayment.key.toString(), payment);
   }
 
   Future<int> clearPayments() async {
