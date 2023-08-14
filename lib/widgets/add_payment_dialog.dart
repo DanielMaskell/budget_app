@@ -39,6 +39,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
   TextEditingController? nameController;
   TextEditingController? descriptionController;
   TextEditingController? amountController;
+  bool paymentNameError = false;
+  bool paymentDescriptionError = false;
+  bool amountError = false;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -64,6 +67,25 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     amountController = TextEditingController(text: widget.payment?.amount.toString());
   }
 
+  bool validateInput() {
+    bool valid = true;
+
+    if (paymentName == null || paymentName!.isEmpty) {
+      valid = false;
+      paymentNameError = true;
+    }
+    if (paymentDescription == null || paymentDescription!.isEmpty) {
+      valid = false;
+      paymentDescriptionError = true;
+    }
+    if (amount == null || amount == 0.00) {
+      valid = false;
+      amountError = true;
+    }
+
+    return valid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -73,25 +95,43 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             children: <Widget>[
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter a Payment Name'),
-                onChanged: (text) => paymentName = text,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: paymentNameError ? Colors.red : Colors.grey, width: 1)),
+                  border: const OutlineInputBorder(),
+                  hintText: 'Enter a Payment Name',
+                ),
+                onChanged: (text) {
+                  paymentName = text;
+                  paymentNameError = false;
+                  setState(() {});
+                },
               ),
               TextField(
                 controller: descriptionController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: paymentDescriptionError ? Colors.red : Colors.grey, width: 1)),
+                  border: const OutlineInputBorder(),
                   hintText: 'Enter a description',
                 ),
-                onChanged: (text) => paymentDescription = text,
+                onChanged: (text) {
+                  paymentDescription = text;
+                  paymentDescriptionError = false;
+                  setState(() {});
+                },
               ),
               TextField(
                 controller: amountController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: amountError ? Colors.red : Colors.grey, width: 1)),
+                  border: const OutlineInputBorder(),
                   hintText: '0.00',
                 ),
                 keyboardType: TextInputType.number,
-                onChanged: (String text) => amount = text != '' ? double.parse(text) : 0,
+                onChanged: (String text) {
+                  amount = text != '' ? double.parse(text) : 0;
+                  amountError = false;
+                  setState(() {});
+                },
               ),
               DropdownButton(
                   value: occurence,
@@ -148,33 +188,37 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
               child: const Text('Cancel')),
           TextButton(
               onPressed: () async {
-                try {
-                  if (paymentName != null) {
-                    final newPayment = PaymentHive(
-                      id: widget.payment?.id,
-                      name: paymentName!,
-                      description: paymentDescription,
-                      type: type,
-                      date: selectedDate,
-                      occurence: 'once',
-                      amount: amount != null ? double.parse(amount!.toStringAsFixed(2)) : 0,
-                    );
-                    if (widget.editing) {
-                      paymentRepository.editPayment(newPayment, widget.payment!);
-                      context.read<PaymentCubit>().getPayments();
-                    } else {
-                      await paymentRepository.addPayment(newPayment);
-                      context.read<PaymentCubit>().getPayments();
-                    }
+                if (validateInput()) {
+                  try {
+                    if (paymentName != null) {
+                      final newPayment = PaymentHive(
+                        id: widget.payment?.id,
+                        name: paymentName!,
+                        description: paymentDescription,
+                        type: type,
+                        date: selectedDate,
+                        occurence: 'once',
+                        amount: amount != null ? double.parse(amount!.toStringAsFixed(2)) : 0,
+                      );
+                      if (widget.editing) {
+                        paymentRepository.editPayment(newPayment, widget.payment!);
+                        context.read<PaymentCubit>().getPayments();
+                      } else {
+                        await paymentRepository.addPayment(newPayment);
+                        context.read<PaymentCubit>().getPayments();
+                      }
 
-                    // widget.addPaymentCallback();
-                    Navigator.of(context).pop();
-                    setState(() {});
-                  } else {
-                    print('Payment name is null');
+                      // widget.addPaymentCallback();
+                      Navigator.of(context).pop();
+                      setState(() {});
+                    } else {
+                      print('Payment name is null');
+                    }
+                  } catch (err) {
+                    print('Error adding payment: $err');
                   }
-                } catch (err) {
-                  print('Error adding payment: $err');
+                } else {
+                  setState(() {});
                 }
               },
               child: widget.editing ? const Text('Save') : const Text('Add')),
