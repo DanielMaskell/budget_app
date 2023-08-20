@@ -8,7 +8,7 @@ import 'package:budget_app/screens/stats_screen.dart';
 
 class Routes {
   static const String home = HomeScreen.routeName;
-  static const String addpet = AddPayment.routeName;
+  static const String addPayment = AddPayment.routeName;
   static const String profile = ProfilePage.routeName;
   static const String login = LoginPage.routeName;
   static const String graphScreen = GraphScreen.routeName;

@@ -12,45 +12,16 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           _createHeader(),
-          _createDrawerItem(
-              icon: Icons.contacts,
-              text: 'Home',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.home)),
-          _createDrawerItem(
-              icon: Icons.event,
-              text: 'Payments',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.addpet)),
-          _createDrawerItem(
-              icon: Icons.event,
-              text: 'Stats',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.stats)),
-          _createDrawerItem(
-              icon: Icons.event,
-              text: 'Graphs',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.graphScreen)),
+          _createDrawerItem(icon: Icons.contacts, text: 'Home', onTap: () => Navigator.pushReplacementNamed(context, Routes.home)),
+          _createDrawerItem(icon: Icons.event, text: 'Payments', onTap: () => Navigator.pushReplacementNamed(context, Routes.addPayment)),
+          _createDrawerItem(icon: Icons.event, text: 'Stats', onTap: () => Navigator.pushReplacementNamed(context, Routes.stats)),
+          _createDrawerItem(icon: Icons.event, text: 'Graphs', onTap: () => Navigator.pushReplacementNamed(context, Routes.graphScreen)),
           const Divider(),
-          _createDrawerItem(
-              icon: Icons.event,
-              text: 'Profile Page',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.profile)),
+          _createDrawerItem(icon: Icons.event, text: 'Profile Page', onTap: () => Navigator.pushReplacementNamed(context, Routes.profile)),
           const Divider(),
-          _createDrawerItem(
-              icon: Icons.event,
-              text: 'CSV Page',
-              onTap: () => Navigator.pushReplacementNamed(context, Routes.csv)),
+          _createDrawerItem(icon: Icons.event, text: 'CSV Page', onTap: () => Navigator.pushReplacementNamed(context, Routes.csv)),
           const Divider(),
-          _createDrawerItem(
-              icon: Icons.event,
-              text: 'Sign Out',
-              onTap: () => {
-                    FirebaseAuth.instance.signOut(),
-                    Navigator.pushReplacementNamed(context, Routes.login)
-                  }),
+          _createDrawerItem(icon: Icons.event, text: 'Sign Out', onTap: () => {FirebaseAuth.instance.signOut(), Navigator.pushReplacementNamed(context, Routes.login)}),
           const Divider(),
         ],
       ),
@@ -67,18 +38,14 @@ class AppDrawer extends StatelessWidget {
           left: 16.0,
           child: Text(
             "Flutter Step-by-Step",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500),
+            style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w500),
           ),
         ),
       ]),
     );
   }
 
-  Widget _createDrawerItem(
-      {IconData? icon, required String text, GestureTapCallback? onTap}) {
+  Widget _createDrawerItem({IconData? icon, required String text, GestureTapCallback? onTap}) {
     return ListTile(
       title: Row(
         children: <Widget>[

@@ -42,7 +42,7 @@ class PaymentService {
 
     box.toMap().forEach(
       (key, value) {
-        print('item value: ${key} ${value.name}');
+        // print('item value: ${key} ${value.name}');
         PaymentHive tempItem = PaymentHive(
           id: key,
           name: value.name,
@@ -51,11 +51,11 @@ class PaymentService {
           occurence: value.occurence,
           amount: value.amount,
         );
-        print('tempItem id: ${tempItem.id}');
+        // print('tempItem id: ${tempItem.id}');
         payments.add(tempItem);
       },
     );
-    print('Payments length: ${payments.length}');
+    // print('Payments length: ${payments.length}');
     return payments;
   }
 }

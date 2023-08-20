@@ -1,10 +1,12 @@
 import 'package:budget_app/bloc/payment_cubit.dart';
+import 'package:budget_app/widgets/total_amount.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:budget_app/repository/user_repository.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:budget_app/routes/routes.dart';
 
 import '../models/payment_hive.dart';
 
@@ -42,8 +44,23 @@ class _HomeScreenState extends State {
       drawer: const SafeArea(child: AppDrawer()),
       body: BlocBuilder<PaymentCubit, PaymentState>(
         builder: (context, state) {
-          return Center(
-            child: Text('Payments: ${state.payments?.length.toString() ?? 'No payments'}'),
+          return Column(
+            children: [
+              Expanded(
+                child: InkWell(
+                  child: const Column(
+                    children: [
+                      Text('Spending Stats:', style: TextStyle(fontSize: 30)),
+                      TotalAmount(),
+                    ],
+                  ),
+                  onTap: () => Navigator.pushReplacementNamed(context, Routes.addPayment),
+                ),
+              ),
+              Center(
+                child: Text('Payments: ${state.payments.length.toString()}'),
+              ),
+            ],
           );
         },
       ),
