@@ -46,17 +46,16 @@ class _HomeScreenState extends State {
         builder: (context, state) {
           return Column(
             children: [
-              Expanded(
-                child: InkWell(
-                  child: const Column(
-                    children: [
-                      Text('Spending Stats:', style: TextStyle(fontSize: 30)),
-                      TotalAmount(),
-                    ],
-                  ),
-                  onTap: () => Navigator.pushReplacementNamed(context, Routes.addPayment),
-                ),
+              Column(
+                children: [
+                  const Text('Spending Stats:', style: TextStyle(fontSize: 30)),
+                  InkWell(
+                    child: const TotalAmount(),
+                    onTap: () => Navigator.pushReplacementNamed(context, Routes.addPayment),
+                  )
+                ],
               ),
+              const Spacer(),
               Center(
                 child: Text('Payments: ${state.payments.length.toString()}'),
               ),

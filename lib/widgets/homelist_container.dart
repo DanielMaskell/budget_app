@@ -17,7 +17,7 @@ class HomelistContainer extends StatelessWidget {
       child: Column(
         children: [
           Text(text, textAlign: TextAlign.center, style: const TextStyle(fontSize: 24, decoration: TextDecoration.underline)),
-          Text(amount.toStringAsFixed(2), style: const TextStyle(fontSize: 24)),
+          Text('\$${amount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 24)),
         ],
       ),
     );

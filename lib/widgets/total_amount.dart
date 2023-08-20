@@ -44,11 +44,11 @@ class _TotalAmountState extends State<TotalAmount> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: HomelistContainer(text: 'Total', amount: totalAmount),
+                  child: HomelistContainer(text: 'Total', amount: totalAmount * -1),
                 ),
                 Expanded(
                   flex: 1,
-                  child: HomelistContainer(text: 'Avg per day', amount: averageSpent),
+                  child: HomelistContainer(text: 'Avg per day', amount: averageSpent * -1),
                 ),
               ],
             ),
@@ -56,11 +56,11 @@ class _TotalAmountState extends State<TotalAmount> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: HomelistContainer(text: 'Last month', amount: spentLastMonth),
+                  child: HomelistContainer(text: 'Last month', amount: spentLastMonth * -1),
                 ),
                 Expanded(
                   flex: 1,
-                  child: HomelistContainer(text: 'This month', amount: spentThisMonth),
+                  child: HomelistContainer(text: 'This month', amount: spentThisMonth * -1),
                 ),
               ],
             ),

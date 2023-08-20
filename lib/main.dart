@@ -62,7 +62,7 @@ class App extends StatelessWidget {
           routes: {
             Routes.home: (context) => const HomeScreen(),
             // Routes.adduser: (context) => AddUser(),
-            Routes.addpet: (context) => const AddPayment(),
+            Routes.addPayment: (context) => const AddPayment(),
             Routes.profile: (context) => const ProfilePage(),
             Routes.login: (context) => const LoginPage(),
             Routes.graphScreen: (context) => const GraphScreen(),
