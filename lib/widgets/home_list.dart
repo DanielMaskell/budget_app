@@ -41,7 +41,7 @@ class _HomeListState extends State<HomeList> {
     monthData = [];
 
     for (PaymentHive p in payments) {
-      tempList.add(p);
+      if (p.amount < 0) tempList.add(p);
     }
     tempList.sort(((a, b) => b.compareTo(a)));
 
