@@ -37,19 +37,13 @@ class _HomeListState extends State<HomeList> {
   }
 
   updateMonthData(int? newMonth, List<PaymentHive> payments) {
-    List<PaymentHive> tempList = [];
     monthData = [];
 
-    for (PaymentHive p in payments) {
-      if (p.amount < 0) tempList.add(p);
+    for (PaymentHive item in payments) {
+      if (item.date.month == month && item.amount < 0) monthData.add(item);
     }
-    tempList.sort(((a, b) => b.compareTo(a)));
 
-    for (PaymentHive item in tempList) {
-      if (item.date.month == month) {
-        monthData.add(item);
-      }
-    }
+    monthData.sort(((a, b) => b.compareTo(a)));
   }
 
   removePaymentCallback(PaymentHive payment) async {
@@ -109,14 +103,7 @@ class _HomeListState extends State<HomeList> {
                 padding: const EdgeInsets.all(4),
                 children: monthData.isNotEmpty
                     ? monthData
-                        // .map((e) => ListTile(title: Text(e.name)))
-                        // .map((p) => ListTile(title: Text(p.name)))
-                        /*.map((p) => PaymentTile(
-                          payment: p,
-                        ))
-                    .toList(),*/
                         .map((p) => PaymentListCard(
-                              // id: p.id,
                               payment: p,
                               removePaymentCallback: removePaymentCallback,
                               editPaymentCallback: editPaymentCallback,
