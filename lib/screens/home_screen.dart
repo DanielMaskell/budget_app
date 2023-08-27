@@ -1,4 +1,5 @@
 import 'package:budget_app/bloc/payment_cubit.dart';
+import 'package:budget_app/widgets/app_screen.dart';
 import 'package:budget_app/widgets/total_amount.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/widgets/drawer.dart';
@@ -37,29 +38,34 @@ class _HomeScreenState extends State {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return /*Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
       ),
       drawer: const SafeArea(child: AppDrawer()),
-      body: BlocBuilder<PaymentCubit, PaymentState>(
+      body: */
+        AppScreen(
+      child: BlocBuilder<PaymentCubit, PaymentState>(
         builder: (context, state) {
-          return Column(
-            children: [
-              Column(
-                children: [
-                  const Text('Spending Stats:', style: TextStyle(fontSize: 30)),
-                  InkWell(
-                    child: const TotalAmount(),
-                    onTap: () => Navigator.pushReplacementNamed(context, Routes.addPayment),
-                  )
-                ],
-              ),
-              const Spacer(),
-              Center(
-                child: Text('Payments: ${state.payments.length.toString()}'),
-              ),
-            ],
+          return SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Column(
+                  children: [
+                    const Text('Spending Stats:', style: TextStyle(fontSize: 30)),
+                    InkWell(
+                      child: const TotalAmount(),
+                      onTap: () => Navigator.pushReplacementNamed(context, Routes.addPayment),
+                    )
+                  ],
+                ),
+                const Spacer(),
+                Center(
+                  child: Text('Payments: ${state.payments.length.toString()}'),
+                ),
+              ],
+            ),
           );
         },
       ),

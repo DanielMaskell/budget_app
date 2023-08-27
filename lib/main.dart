@@ -16,6 +16,7 @@ import 'bloc/payment_cubit.dart';
 import 'firebase_options.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'providers/theme.dart';
 
 import 'models/date_hive.dart';
 
@@ -42,6 +43,7 @@ void main() async {
 
 class App extends StatelessWidget {
   final PaymentRepository pr = PaymentRepository(service: PaymentService());
+
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
@@ -56,7 +58,14 @@ class App extends StatelessWidget {
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
-          theme: ThemeData(primarySwatch: Colors.indigo),
+          theme: ThemeData(
+            primarySwatch: Colors.indigo,
+            textTheme: const TextTheme(
+              displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
+              titleLarge: TextStyle(fontSize: 36, fontStyle: FontStyle.italic),
+              bodyMedium: TextStyle(fontSize: 14, fontFamily: 'Hind'),
+            ),
+          ),
           home: const LoginPage(),
           // home: const ProviderInit(),
           routes: {
