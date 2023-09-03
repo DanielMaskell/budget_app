@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:budget_app/screens/register_screen.dart';
 import 'package:budget_app/fire_auth.dart';
 import 'package:budget_app/validator.dart';
-import 'package:budget_app/screens/home_screen.dart';
+import 'package:budget_app/screens/home_page.dart';
 import 'package:budget_app/repository/user_repository.dart';
 
 class LoginPage extends StatefulWidget {
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) => const HomePage(),
         ),
       );
     }
@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                                               addUserToDb();
                                               Navigator.of(context).pushReplacement(
                                                 MaterialPageRoute(
-                                                  builder: (context) => const HomeScreen(),
+                                                  builder: (context) => const HomePage(),
                                                 ),
                                               );
                                             }

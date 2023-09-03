@@ -5,7 +5,7 @@ import 'package:budget_app/screens/add_payment.dart';
 import 'package:budget_app/screens/csv_screen.dart';
 import 'package:budget_app/screens/graph_screen.dart';
 import 'package:budget_app/screens/login_screen.dart';
-import 'package:budget_app/screens/home_screen.dart';
+import 'package:budget_app/screens/home_page.dart';
 import 'package:budget_app/screens/profile_screen.dart';
 import 'package:budget_app/screens/stats_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,6 @@ import 'bloc/payment_cubit.dart';
 import 'firebase_options.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'providers/theme.dart';
 
 import 'models/date_hive.dart';
 
@@ -69,8 +68,7 @@ class App extends StatelessWidget {
           home: const LoginPage(),
           // home: const ProviderInit(),
           routes: {
-            Routes.home: (context) => const HomeScreen(),
-            // Routes.adduser: (context) => AddUser(),
+            Routes.home: (context) => const HomePage(),
             Routes.addPayment: (context) => const AddPayment(),
             Routes.profile: (context) => const ProfilePage(),
             Routes.login: (context) => const LoginPage(),

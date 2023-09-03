@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:budget_app/widgets/drawer.dart';
 import '../widgets/home_list.dart';
 
 class AddPayment extends StatefulWidget {
@@ -23,17 +22,12 @@ class _AddPaymentState extends State<AddPayment> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Payments'),
-        ),
-        drawer: const SafeArea(child: AppDrawer()),
-        body: Center(
-          child: HomeList(
-            key: homeListKey,
-            homeListCallback: homeListCallback,
-          ),
-        ));
+    return Center(
+      child: HomeList(
+        key: homeListKey,
+        homeListCallback: homeListCallback,
+      ),
+    );
   }
 
   void homeListCallback() {

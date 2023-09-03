@@ -1,6 +1,5 @@
 import 'package:budget_app/bloc/payment_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:budget_app/widgets/drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import '../models/payment_hive.dart';
@@ -88,10 +87,6 @@ class _GraphScreen extends State<GraphScreen> {
         ];
 
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Payments'),
-          ),
-          drawer: const SafeArea(child: AppDrawer()),
           body: Column(
             children: [
               DropdownButton<int>(

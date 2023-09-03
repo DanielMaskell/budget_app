@@ -1,4 +1,6 @@
-import 'package:budget_app/routes/routes.dart';
+import 'package:budget_app/screens/add_payment.dart';
+import 'package:budget_app/screens/graph_screen.dart';
+import 'package:budget_app/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:budget_app/widgets/drawer.dart';
 
@@ -17,40 +19,73 @@ class AppScreen extends StatefulWidget {
 class _AppScreenState extends State<AppScreen> {
   int _selectedIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void _onItemTapped(int index) {
+    setState(() => _selectedIndex = index);
     switch (index) {
       case 0:
-        Navigator.pushReplacementNamed(context, Routes.home);
+        Navigator.of(context, rootNavigator: true).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => const HomePage(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return child;
+            },
+          ),
+        );
         break;
       case 1:
-        Navigator.pushReplacementNamed(context, Routes.addPayment);
+        Navigator.of(context, rootNavigator: true).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => const AddPayment(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return child;
+            },
+          ),
+        );
         break;
-      case 3:
-        Navigator.pushReplacementNamed(context, Routes.graphScreen);
+      case 2:
+        Navigator.of(context, rootNavigator: true).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => const GraphScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return child;
+            },
+          ),
+        );
         break;
     }
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: ,
-      // appBar: AppBar(
-      //   title: const Text('Home Screen'),
-      // ),
       drawer: const SafeArea(
         child: AppDrawer(),
       ),
       body: SafeArea(child: widget.child),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home', backgroundColor: Colors.lightBlue),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Payments', backgroundColor: Colors.lightBlue),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Graphs', backgroundColor: Colors.lightBlue),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Graphs', backgroundColor: Colors.lightBlue),
+        selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.green,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: _selectedIndex == 0 ? Colors.lightBlue : Colors.white,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.home),
+            label: 'Payments',
+            backgroundColor: _selectedIndex == 1 ? Colors.lightBlue : Colors.white,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.add),
+            label: 'Graphs',
+            backgroundColor: _selectedIndex == 2 ? Colors.lightBlue : Colors.white,
+          ),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
